@@ -8,4 +8,4 @@ from loader import dp, db_users, db_bj, db_ts, bot
 
 @dp.message_handler(filters.ChatTypeFilter(types.ChatType.PRIVATE), text="📋Mening testlarim")
 async def mytest(msg : types.Message):
-    pass
+    await msg.answer("<b>Bu bo'lim ishlab chiqish jarayonida</b>")
