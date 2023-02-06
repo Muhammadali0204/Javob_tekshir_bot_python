@@ -10,5 +10,5 @@ async def ping_command_handler(msg: types.Message):
     m: types.Message = await msg.reply("Pong") 
     t2 = time.time()
     ping = round((t2-t1)*1000, 2)
-    await m.edit_text(f"PING: {ping} ms")
+    await m.edit_text(f"Ping : {ping} ms")
     
