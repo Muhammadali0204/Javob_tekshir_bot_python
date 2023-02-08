@@ -1,13 +1,13 @@
 from . import commands
 from . import start
 from . import bekor_qil
-from . import photo
+# from . import photo
 from . import ortga_menu
 from . import ism_tahrirlash
 from . import aboutme
-from . import boglangan_kanal
-from . import limitlarni_oshirish
-from . import kanal_qushish
+# from . import boglangan_kanal
+# from . import limitlarni_oshirish
+# from . import kanal_qushish
 from . import sozlamalar
 from . import admingamurojaat
 from . import test_tuzish
