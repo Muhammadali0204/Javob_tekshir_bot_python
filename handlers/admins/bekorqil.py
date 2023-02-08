@@ -10,3 +10,4 @@ from keyboards.default.menu import menu
 async def cancel(msg : types.Message, state : FSMContext):
         await state.finish()
         await msg.answer("<b>❌Bekor qilindi.</b>")
+        await msg.answer(text="<b><i>📋Menu : </i></b>", reply_markup=menu)
