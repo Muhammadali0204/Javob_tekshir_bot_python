@@ -94,7 +94,7 @@ class Database:
     
     def select_premium_narxi(self): # this
         data = self.execute("SELECT Username FROM Users WHERE user_id = ?", parameters=(5,), fetchone=True)
-        return data[0]
+        return data
     
     def update_premium_narx(self, narx):
         self.execute(sql="UPDATE Users SET username = ? WHERE user_id = 5", parameters=(narx, ), commit=True)
