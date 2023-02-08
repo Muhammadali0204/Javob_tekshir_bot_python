@@ -155,6 +155,6 @@ async def tugatish(call : types.CallbackQuery):
                         await bot.send_message(kanal, text=answer)
                         await call.message.answer(f"<b>{kanal} kanaliga natijalar yuborildi.</b>")
                     except Exception as e:
-                        await call.message.answer(f"<b>Xatolik!</b>\n{e}")
+                        await call.message.answer(f"<b>Kanalga post joylash bo'yicha xatolik!</b>\n{e}")
                         await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
             

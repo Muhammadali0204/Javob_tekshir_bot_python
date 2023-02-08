@@ -124,7 +124,12 @@ async def yes(call : types.CallbackQuery, state : FSMContext):
             await call.message.delete()
             await state.finish()
             temp_data[user_id] = None
-            answer_admin = f"<b>{test_kodi} - testga </b><i>{call.from_user.get_mention(call.from_user.full_name)}</i><b> javob yubordi.</b>"
+            user = db_users.select_user_id(call.from_user.id)
+            if user[2] == None:
+                username = "username mavjud emas!"
+            else:
+                username = f"@{user[2]}"
+            answer_admin = f"<b>{test_kodi} - testga </b><i>{user[1]}</i><b><i>({username})</i> javob jo'natdi.</b>"
             await bot.send_message(data_test[0], answer_admin, reply_markup=test_owner(test_kodi))
             
             

@@ -106,7 +106,7 @@ async def buyruq(msg : types.Message):
                                 await bot.send_message(kanal, text=answer)
                                 await bot.send_message(oddiy_test[0],f"<b>{kanal} kanaliga natijalar yuborildi.</b>")
                             except Exception as e:
-                                await bot.send_message(oddiy_test[0],f"<b>Xatolik!</b>\n{e}")
+                                await bot.send_message(oddiy_test[0],f"Kanalga post joylash bo'yicha xatolik!\n{e}")
                                 await bot.send_message(oddiy_test[0], "<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
                     
                     await asyncio.sleep(0.1)
@@ -203,7 +203,7 @@ async def buyruq(msg : types.Message):
                                 await bot.send_message(kanal, text=answer)
                                 await bot.send_message(data_test_blok[0],f"<b>{kanal} kanaliga natijalar yuborildi.</b>")
                             except Exception as e:
-                                await bot.send_message(data_test_blok[0],f"<b>Xatolik!</b>\n{e}")
+                                await bot.send_message(data_test_blok[0],f"Kanalga post joylash bo'yicha xatolik!\n{e}")
                                 await bot.send_message(data_test_blok[0],"<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
                     
                 else:
@@ -271,7 +271,7 @@ async def buyruq(msg : types.Message):
                                     await bot.send_message(kanal, text=answer)
                                     await bot.send_message(oddiy_test[0],f"<b>{kanal} kanaliga natijalar yuborildi.</b>")
                                 except Exception as e:
-                                    await bot.send_message(oddiy_test[0],f"<b>Xatolik!</b>\n{e}")
+                                    await bot.send_message(oddiy_test[0],f"Kanalga post joylash bo'yicha xatolik!\n{e}")
                                     await bot.send_message(oddiy_test[0], "<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
                         
                         await asyncio.sleep(0.1)
@@ -360,7 +360,7 @@ async def buyruq(msg : types.Message):
                                     await bot.send_message(kanal, text=answer)
                                     await bot.send_message(data_test_blok[0],f"<b>{kanal} kanaliga natijalar yuborildi.</b>")
                                 except Exception as e:
-                                    await bot.send_message(data_test_blok[0],f"<b>Xatolik!</b>\n{e}")
+                                    await bot.send_message(data_test_blok[0],f"Kanalga post joylash bo'yicha xatolik!\n{e}")
                                     await bot.send_message(data_test_blok[0],"<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
                         
                     else:
