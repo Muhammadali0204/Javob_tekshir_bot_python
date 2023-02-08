@@ -6,3 +6,5 @@ from . import tt_test_kodi
 from . import ping
 from . import time
 from . import sendmessageusers
+from . import test_kodi
+from . import foydalanuvchiga_xabar

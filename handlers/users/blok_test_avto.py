@@ -157,7 +157,7 @@ async def minut(call : CallbackQuery, state : FSMContext):
             await state.finish()
             
             user = db_users.select_user_id(call.from_user.id)
-            if user[3] != '0':
+            if user[3] != '0' and user[3] != '-1':
                 answer = "<b>Bu test natijasi kanalingizga joylansinmi ❓</b>\n<i>*Testni yakunlaganingizda, test natijasi bot tomonidan kanalga joylanadi.</i>"
                 await call.message.answer(text=answer, reply_markup=post(test_kodi, "Blok_test"))
             

@@ -12,6 +12,8 @@ async def bot_start(message: types.Message, state : FSMContext):
         data = db_users.select_user_id(message.from_user.id)
         if data == None:
             db_users.add_user(message.from_user.id, message.from_user.full_name, message.from_user.username, 0, None)
+            foydalanuvchi_limitlari_oddiy[message.from_user.id] = [Limitlar_oddiy[0], Limitlar_oddiy[1]]
+            foydalanuvchi_limitlari_blok[message.from_user.id] = [Limitlar_oddiy[0], Limitlar_oddiy[1]]
             await state.set_state("ism")
             await message.answer(f"👋<b>Salom, <i>{message.from_user.get_mention(message.from_user.full_name)}</i>\nXush kelibsiz❗️</b>")
             await message.answer("✍️<i>Ism familiyangizni kiriting : </i>\n")
@@ -28,8 +30,6 @@ async def bot_start(message: types.Message, state : FSMContext):
 async def ism(msg : types.Message, state : FSMContext):
     if len(msg.text) > 2 and all(x.isalpha() or x.isspace() or isbelgi(x) for x in msg.text):
         db_users.update_user_name(msg.from_user.id, msg.text)
-        foydalanuvchi_limitlari_oddiy[msg.from_user.id] = [Limitlar_oddiy[0], Limitlar_oddiy[1]]
-        foydalanuvchi_limitlari_blok[msg.from_user.id] = [Limitlar_oddiy[0], Limitlar_oddiy[1]]
         await msg.answer("🎉<b>Tabriklaymiz!\nBotdan foydalanishingiz mumkin!</b>😊")
         await msg.answer("<b><i>📋Menu : </i></b>", reply_markup=menu)
         await state.finish()
@@ -39,4 +39,4 @@ async def ism(msg : types.Message, state : FSMContext):
         
 @dp.message_handler(CommandStart(), filters.ChatTypeFilter(types.ChatType.SUPERGROUP))
 async def bot_start(message: types.Message):
-    await message.reply("<b>Bu bot faqat shaxsiy chatda ishlaydi❗️</b>\n<i>Botni guruhdan chiqarganingiz ma`qul</i>")
+    await message.reply("<b>Bu bot faqat shaxsiy chatda ishlaydi❗️</b>")

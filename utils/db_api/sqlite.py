@@ -92,6 +92,16 @@ class Database:
         data = self.execute("SELECT Username FROM Users WHERE user_id = ?", parameters=(1,), fetchone=True)
         return data[0]
     
+    def select_premium_narxi(self): # this
+        data = self.execute("SELECT Username FROM Users WHERE user_id = ?", parameters=(5,), fetchone=True)
+        return data[0]
+    
+    def update_premium_narx(self, narx):
+        self.execute(sql="UPDATE Users SET username = ? WHERE user_id = 5", parameters=(narx, ), commit=True)
+        
+    def update_status_user(self, sana, id):
+        self.execute(sql="UPDATE Users SET status = ? WHERE user_id = ?", parameters=(sana, id), commit=True)
+    
     
     
 # Tuzilgan savollar

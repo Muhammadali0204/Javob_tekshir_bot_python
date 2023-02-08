@@ -7,7 +7,7 @@ sozlama_keyboard = ReplyKeyboardMarkup(
             KeyboardButton(text="⬆️Limitlarni oshirish")
         ],
         [
-            KeyboardButton(text="🖇Bog'langan kanal"),
+            KeyboardButton(text="🖇Bog'langan kanal/guruh"),
             KeyboardButton(text="◀️Ortga")
         ]
     ], resize_keyboard=True

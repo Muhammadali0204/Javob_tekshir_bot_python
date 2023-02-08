@@ -19,9 +19,9 @@ try :
     foydalanuvchi_limitlari_oddiy = {}
     
     for i in range(0, len(users)):
-        if users[i][3] == '0':
+        if users[i][3] == '0' or users[i][3] == '-1':
             foydalanuvchi_limitlari_oddiy[users[i][0]] = [Limitlar_oddiy[0], Limitlar_oddiy[1]]
-        elif users[i][3] != '0':
+        else :
             foydalanuvchi_limitlari_oddiy[users[i][0]] = [Limitlar_oddiy[2], Limitlar_oddiy[3]]
 except Exception as e:
     print(e)
@@ -32,9 +32,9 @@ try :
     Limitlar_blok = [int(listt_blok[0]), int(listt_blok[1]), int(listt_blok[2]), int(listt_blok[3])]
     foydalanuvchi_limitlari_blok = {}
     for i in range(0, len(users)):
-        if users[i][3] == '0':
+        if users[i][3] == '0' or users[i][3] == '-1':
             foydalanuvchi_limitlari_blok[users[i][0]] = [Limitlar_blok[0], Limitlar_blok[1]]
-        elif users[i][3] != '0':
+        else:
             foydalanuvchi_limitlari_blok[users[i][0]] = [Limitlar_blok[2], Limitlar_blok[3]]
 except Exception as e:
     print(e)
@@ -42,3 +42,4 @@ temp_data = {}
 vaqt_junat = False
 kitoblar = ["📕", "📗", "📘", "📙", "📗"]
 kanallar = db_users.kanallar()[0].split(',')
+premium_narxi = db_users.select_premium_narxi()

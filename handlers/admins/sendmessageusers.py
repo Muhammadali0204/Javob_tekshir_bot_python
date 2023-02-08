@@ -1,6 +1,8 @@
 from loader import db_users, dp, bot
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from keyboards.default.admin import admin_key
+from keyboards.default.bekor_qilish import bekor_qil
 import asyncio
 from data.config import ADMINS
 from keyboards.inline.forward_copy import inline_key
@@ -9,6 +11,7 @@ from keyboards.inline.forward_copy import inline_key
 
 @dp.message_handler(text="Reklama", chat_id = ADMINS)
 async def sendmessage(msg : types.Message, state : FSMContext):
+    await msg.answer(text="<b>Reklama yuborish : </b>\n<i>(Oddiy xabar, Rasm, Video, Dokument)</i>", reply_markup=bekor_qil)
     await msg.answer("<b>Forward yoki copy ? </b>", reply_markup=inline_key)
     await state.set_state("reklama_turi")
     
@@ -24,7 +27,7 @@ async def func(call : types.CallbackQuery, state : FSMContext):
     await state.set_state("copy")
     await call.message.delete()
     
-@dp.message_handler(state="forward", content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.TEXT])
+@dp.message_handler(state="forward", content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.TEXT, types.ContentType.DOCUMENT])
 async def func(msg : types.Message, state : FSMContext):
     users = db_users.select_all_users()
     n = 0
@@ -36,10 +39,10 @@ async def func(msg : types.Message, state : FSMContext):
         except:
             pass
         
-    await msg.answer(f"<b>{n} ta foydalanuvchiga xabar yuborildi ✅</b>\n<b>{len(users) - n} taga yuborilmadi ❌</b>")
+    await msg.answer(f"<b>{n} ta foydalanuvchiga xabar yuborildi ✅</b>\n<b>{len(users) - n} taga yuborilmadi ❌</b>", reply_markup=admin_key)
     await state.finish()
     
-@dp.message_handler(state="copy", content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.TEXT])
+@dp.message_handler(state="copy", content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.TEXT, types.ContentType.DOCUMENT])
 async def func(msg : types.Message, state : FSMContext):
     users = db_users.select_all_users()
     n = 0
@@ -51,7 +54,7 @@ async def func(msg : types.Message, state : FSMContext):
         except:
             pass
         
-    await msg.answer(f"<b>{n} ta foydalanuvchiga xabar yuborildi ✅</b>\n<b>{len(users) - n} taga yuborilmadi ❌</b>")
+    await msg.answer(f"<b>{n} ta foydalanuvchiga xabar yuborildi ✅</b>\n<b>{len(users) - n} taga yuborilmadi ❌</b>", reply_markup=admin_key)
     await state.finish()
     
     

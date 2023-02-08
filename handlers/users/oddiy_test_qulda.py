@@ -66,7 +66,7 @@ async def javob_ol(call : types.CallbackQuery, state : FSMContext):
     await call.message.delete()
     await call.message.answer(f"🔑<b>Test kodi : </b><i>{test_kodi}</i>\n🗂<b>Test turi : </b><i>Oddiy</i>\n{kitoblar[random.randint(0, 4)]}<b>Fan nomi : </b><i>{temp_data[call.from_user.id][0]}</i>\n🔢<b>Savollar soni : </b><i>{len(temp_data[call.from_user.id][1])} ta</i>\n\n<b>Testda qatnashuvchilar\n\n<i>@Javob_tekshir_bot</i> 👈\n\nga javoblarini yuborishlari mumkin.</b>", reply_markup=menu.menu)
     user = db_users.select_user_id(call.from_user.id)
-    if user[3] != '0':
+    if user[3] != '0' and user[3] != '-1':
         answer = "<b>Bu test natijasi kanalingizga joylansinmi ❓</b>\n<i>*Testni yakunlaganingizda, test natijasi bot tomonidan kanalga joylanadi.</i>"
         await call.message.answer(text=answer, reply_markup=post(test_kodi, "Oddiy_test"))
     temp_data[call.from_user.id] = None

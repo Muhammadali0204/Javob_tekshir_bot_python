@@ -5,7 +5,7 @@ from keyboards.default import menu, bekor_qilish
 from loader import dp, db_users
 
 
-@dp.message_handler(text="♻️Ismni tahrirlash", state="Sozlamalar")
+@dp.message_handler(text="♻️Ismni tahrirlash", state="sozlamalar")
 async def ism_tah(msg : types.Message, state : FSMContext):
     await msg.answer("<b>♻️Ismni tahrirlash\n\nIsm familiyangizni yuboring : </b>\n<i>Masalan : Aliyev G`ani</i>", reply_markup=bekor_qilish.bekor_qil)
     await state.set_state("ism_tah")

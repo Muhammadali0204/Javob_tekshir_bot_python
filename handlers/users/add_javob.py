@@ -33,9 +33,17 @@ async def javob(msg : types.Message, state : FSMContext):
             answer = "<b>Testga javob bera olish uchun quyidagi kanallarga obuna bo`ling❗️</b>"
             await msg.answer(answer, disable_web_page_preview=True, reply_markup=channels_keyboard(azo_bulmagan_kanallar, "javob_ber"))
         else:
+            user = db_users.select_user_id(msg.from_user.id)
+            if user == None:
+                await msg.answer("<b>Iltimos /start ni bosing va ism familiyangizni kiriting!</b>")
+                return
             await msg.answer("<b>Yaxshi, test kodini yuboring : </b>", reply_markup=bekor_qil)
             await state.set_state("test_kodi")
     else:
+        user = db_users.select_user_id(msg.from_user.id)
+        if user == None:
+            await msg.answer("<b>Iltimos /start ni bosing va ism familiyangizni kiriting!</b>")
+            return
         await msg.answer("<b>Yaxshi, test kodini yuboring : </b>", reply_markup=bekor_qil)
         await state.set_state("test_kodi")
     
