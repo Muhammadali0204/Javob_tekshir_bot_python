@@ -112,6 +112,7 @@ async def test_kodii(msg : types.Message, state : FSMContext):
                             temp_data[msg.from_user.id][1].append(f"{temp}~{q[0]}~{q[1]}")
                         answer += f"<b>Jami savollar soni : </b><i>{q[1]} ta</i>\n"
                         answer += f"<b>Umumiy ball : </b><i>{round(umumiy_ball, 4)} ball</i>\n\n"
+                        answer += "<i>Javob yuborishni boshlash uchun :\n\nJavob yuborishni boshlash➡️\n\ntugmasini bosing.</i>"
                         await msg.answer(answer, reply_markup=boshlash)
                         await state.set_state("javob_yuborishni_boshlash_blok")
                     else:

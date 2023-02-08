@@ -1,6 +1,5 @@
 from . import commands
 from . import start
-from . import time
 from . import bekor_qil
 from . import ortga_menu
 from . import ism_tahrirlash

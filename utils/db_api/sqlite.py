@@ -73,6 +73,9 @@ class Database:
 
     def update_user_name(self, id, ism): # this
         self.execute("UPDATE Users SET name = ? WHERE user_id = ?", parameters=(ism,id), commit=True)
+        
+    def update_username(self, id, ism): # this
+        self.execute("UPDATE Users SET username = ? WHERE user_id = ?", parameters=(ism,id), commit=True)
 
     def select_limits_oddiy(self): #this
         return self.execute("SELECT * FROM Users WHERE user_id = 3", fetchone=True)
@@ -127,10 +130,19 @@ class Database:
         sql = f" UPDATE {test_turi} SET avto_post = 1 WHERE test_kodi = ?"
         self.execute(sql=sql, parameters=(test_kodi,), commit=True)
         
+    def update_test_faollik(self, test_turi, test_kodi):
+        sql = f"UPDATE {test_turi} SET faollik = 1 WHERE test_kodi = ?"
+        self.execute(sql=sql, parameters=(test_kodi,), commit=True)
+        
     def all_tests_oddiy_sana(self):
         return self.execute(sql="SELECT * FROM Oddiy_test WHERE avto_vaqt LIKE '%.%' ", fetchall=True)
     def all_tests_blok_sana(self):
         return self.execute(sql="SELECT * FROM Blok_test WHERE avto_vaqt LIKE '%.%' ", fetchall=True)
+    
+    def all_tests_oddiy_vaqt(self):
+        return self.execute(sql="SELECT * FROM Oddiy_test WHERE avto_vaqt LIKE '%,%' ", fetchall=True)
+    def all_tests_blok_vaqt(self):
+        return self.execute(sql="SELECT * FROM Blok_test WHERE avto_vaqt LIKE '%,%' ", fetchall=True)
 
 # Berilgan javoblar
 
@@ -149,7 +161,7 @@ class Database:
         self.execute(sql, parameters=(id, kod, tuplagan_bal, xato_javoblari, jami), commit=True) 
         
     def select_all_javob_berganlar_by_test_kodi(self, test_kodi):
-        sql = "SELECT * FROM Oddiy_test WHERE test_kodi = ?"
+        sql = "SELECT user_id FROM Oddiy_test WHERE test_kodi = ?"
         oddiy_testga_javoblar = self.execute(sql=sql, parameters=(test_kodi,), fetchall=True)
         if oddiy_testga_javoblar == []:
             sql = "SELECT * FROM Blok_test WHERE test_kodi = ?"
@@ -162,6 +174,10 @@ class Database:
         sql = "SELECT * FROM Oddiy_test ORDER BY jami_bali DESC"
         return self.execute(sql=sql, fetchall=True)
     
+    def select_all_javob_berganlar_tartiblangan_oddiy_by_testkodi(self, kod):
+        sql = "SELECT * FROM Oddiy_test WHERE test_kodi = ? ORDER BY jami_bali DESC"
+        return self.execute(sql=sql, parameters=(kod,), fetchall=True)
+    
     def delete_answers_oddiy_by_test_kodi(self, test_kodi):
         sql = "DELETE FROM Oddiy_test WHERE test_kodi = ?"
         self.execute(sql, parameters=(test_kodi,), commit=True)
@@ -170,6 +186,10 @@ class Database:
     def select_all_javob_berganlar_tartiblangan_blok(self):
         sql = "SELECT * FROM Blok_test ORDER BY jami_bali DESC"
         return self.execute(sql=sql, fetchall=True)
+    
+    def select_all_javob_berganlar_tartiblangan_blok_by_testkodi(self, kod):
+        sql = "SELECT * FROM Blok_test WHERE test_kodi = ? ORDER BY jami_bali DESC"
+        return self.execute(sql=sql, parameters=(kod,), fetchall=True)
         
     def delete_answers_blok_by_test_kodi(self, test_kodi):
         sql = "DELETE FROM Blok_test WHERE test_kodi = ?"

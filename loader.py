@@ -2,6 +2,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from utils.db_api import sqlite
 from data import config
+from datetime import datetime
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 storage = MemoryStorage()
@@ -9,7 +10,7 @@ dp = Dispatcher(bot, storage=storage)
 db_users = sqlite.Database("data/Users.db")
 db_ts = sqlite.Database("data/Tuzilgan_savollar.db")
 db_bj = sqlite.Database("data/Berilgan_javoblar.db")
-Vaqt = ""
+Vaqt = datetime(2023, 1, 1, 0, 0, 0)
 users = db_users.select_all_users()
 try : 
     limits = db_users.select_limits_oddiy()

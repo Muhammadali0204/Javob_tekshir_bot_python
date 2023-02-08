@@ -66,17 +66,11 @@ async def tekshir(call : types.CallbackQuery, state : FSMContext):
         if vergul != -1:
             vaqt = data_test[4].split(',')
             answer += f"🕐<i>Test {vaqt[2]}:{vaqt[3]} da yakunlanadi.</i>\n\n"
-        answer += "<i>Javobingiz haqida batafsil ma`lumot test yakunlangandan so`ng yuboriladi</i>"
         await call.message.answer(answer, reply_markup=menu)
         await call.answer(f"{kod} - testga javob berdingiz ✅", show_alert=True)
         await call.message.delete()
         await state.finish()
         temp_data[call.from_user.id] = None
-        username = call.from_user.username
-        if username == None:
-            username = "Username mavjud emas"
-        else:
-            username = f"@{username}"
         answer_admin = f"<b>{kod} - testga </b><i>{call.from_user.get_mention(call.from_user.full_name)}</i><b> javob jo`natdi.</b>"
         await bot.send_message(data_test[0], answer_admin, reply_markup=test_owner(kod))
         

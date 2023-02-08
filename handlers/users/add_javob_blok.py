@@ -109,27 +109,21 @@ async def yes(call : types.CallbackQuery, state : FSMContext):
                 db_bj.add_javob_blok(user_id, test_kodi, tuplagan_ballari, xato_javoblari, summ)
             except Exception as e:
                 print(e)
-            bali = 0
-            for qwe in tuplagan_ballari_temp:
-                bali += float(qwe)
-            bali = round(bali, 4)
-            fan_nomlari = "\n".join([f"{kitoblar[random.randint(0,4)]}{item}" for item in fan_nomlari])
-            answer = f"🔑<b>Test kodi : </b><i>{test_kodi}</i>\n🗂<b>Test turi : </b><i>Blok test</i>\n📚<b>Fanlar : \n</b><i>{fan_nomlari}</i>\n✅<b>Sizning natijangiz : </b><i>{bali} ball</i>\n\n"
+            
+            answer = f"🔑<b>Test kodi : </b><i>{test_kodi}</i>\n🗂<b>Test turi : </b><i>Blok test</i>\n✅<b>Sizning natijangiz : </b>\n"
+            for qwe in range(0, len(fan_nomlari)):
+                answer += f"<b>{kitoblar[random.randint(0,4)]}{fan_nomlari[qwe]} : </b><i>{tuplagan_ballari_temp[qwe]} ball</i>\n"
+            answer += f"<b>Umumiy natijangiz : </b><i>{summ} ball</i>\n\n"
+            
             vergul = data_test[5].find(',')
             if vergul != -1:
                 vaqt = data_test[5].split(',')
                 answer += f"⏱<i>Test {vaqt[2]}:{vaqt[3]} da yakunlanadi.\n\n</i>"
-            answer += "<i>Javobingiz haqida batafsil ma`lumot test yakunlangandan so`ng yuboriladi.</i>"
             await call.message.answer(answer, reply_markup=menu)
             await call.answer(f"{test_kodi} - testga javob berdingiz ✅", show_alert=True)
             await call.message.delete()
             await state.finish()
             temp_data[user_id] = None
-            username = call.from_user.username
-            if username == None:
-                username = "Username mavjud emas"
-            else:
-                username = f"@{username}"
             answer_admin = f"<b>{test_kodi} - testga </b><i>{call.from_user.get_mention(call.from_user.full_name)}</i><b> javob yubordi.</b>"
             await bot.send_message(data_test[0], answer_admin, reply_markup=test_owner(test_kodi))
             

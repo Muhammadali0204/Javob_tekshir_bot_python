@@ -17,11 +17,10 @@ async def tugatish(call : types.CallbackQuery):
         await call.message.delete()
     else:
         if data_test_blok == None: # Test oddiy bo`lsa
-            javob_berganlar_malumoti = db_bj.select_all_javob_berganlar_tartiblangan_oddiy()
+            javob_berganlar_malumoti = db_bj.select_all_javob_berganlar_tartiblangan_oddiy_by_testkodi(test_kodi)
             javob_berganlar = [] # [(1, 2, 3), (4, 5, 6, ) ... ]
             for user in javob_berganlar_malumoti:
-                if user[1] == int(test_kodi):
-                    javob_berganlar.append([db_users.select_user_id(user[0]), user])
+                javob_berganlar.append([db_users.select_user_id(user[0]), user])
                     
             # Test egasiga ------------------------------
             ragbat = '🥇'
@@ -74,36 +73,14 @@ async def tugatish(call : types.CallbackQuery):
                         await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
                         
             # javob berganlar -- [(5035718776, 'Muhammad Ali', 'None', '0', None), (5035718776,      112,      4,          ''   )]
- #                                      id            ismi    username  sta  kanal     user_id       kodi    javoblar  xato javoblar
- # Test ishtirokchilariga --------------------------------------
-            for i in range(0, len(javob_berganlar)):
-                answer = f"🔑 <i>{test_kodi}</i><b> - kodli test yakunlandi✅</b>\n🗂<b>Test turi : </b><i>Oddiy</i>\n{kitoblar[random.randint(0, 4)]}<b>Fan nomi : </b><i>{data_test_oddiy[2]}</i>\n"
-                answer += f"✅<b>To`g`ri javoblar soni : </b><i>{javob_berganlar[i][1][2]} ta</i>\n\n"
-                xatolar = javob_berganlar[i][1][3].split(',')
-                for j in range(0, len(data_test_oddiy[3])):
-                    if str(j+1) in xatolar:
-                        if (j+1) % 4 != 0:
-                            answer += f"<i>{j+1} - ❌</i>  "
-                        else:
-                            answer += f"<i>{j+1} - ❌</i>\n"
-                    else:
-                        if (j+1) % 4 != 0:
-                            answer += f"<i>{j+1} - ✅  </i>"
-                        else:
-                            answer += f"<i>{j+1} - ✅\n</i>"
-                        
-                
-                await bot.send_message(javob_berganlar[i][0][0], text=answer)
-                await asyncio.sleep(0.05)
-  # Test ishtirokchilariga --------------------------------------           
+ #                                      id            ismi    username  sta  kanal     user_id       kodi    javoblar  xato javoblar          
          
         elif data_test_oddiy == None: # Test blok test bo`lsa
             
-            javob_berganlar_malumoti = db_bj.select_all_javob_berganlar_tartiblangan_blok()
+            javob_berganlar_malumoti = db_bj.select_all_javob_berganlar_tartiblangan_blok_by_testkodi(test_kodi)
             javob_berganlar = [] # [(1, 2, 3), (4, 5, 6, ) ... ]
             for user in javob_berganlar_malumoti:
-                if user[1] == int(test_kodi):
-                    javob_berganlar.append([db_users.select_user_id(user[0]), user])
+                javob_berganlar.append([db_users.select_user_id(user[0]), user])
             
             
             fan_nomlari = data_test_blok[2].split(',')
@@ -181,26 +158,3 @@ async def tugatish(call : types.CallbackQuery):
                         await call.message.answer(f"<b>Xatolik!</b>\n{e}")
                         await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
             
-            fan_nomlari_string = "\n".join(fan_nomlari)
-            for i in range(0, len(javob_berganlar)):
-                answer = f"🔑<i>{test_kodi}</i><b> - kodli test yakunlandi ✅</b>\n🗂<b>Test turi : </b><i>Blok test</i>\n🟢<b>Fanlar :  \n</b><i>{fan_nomlari_string}</i>\n\n"
-                fan_uchun_ballari = javob_berganlar[i][1][2].split(',')
-                xatolar = javob_berganlar[i][1][3].split(',')
-                n = 0
-                for j in range(0, len(javoblar)):
-                    answer += f"<b>{fan_nomlari[j]} : </b><i>{round(float(fan_uchun_ballari[j]), 4)} ball</i>\n"
-                    for k in range(0, len(javoblar[j])):
-                        if str(n+1) in xatolar:
-                            if (k+1) % 4 != 0:
-                                answer += f"<i>{n+1} - ❌</i>  "
-                            else:
-                                answer += f"<i>{n+1} - ❌</i>\n"
-                        else:
-                            if (k+1) % 4 != 0:
-                                answer += f"<i>{n+1} - ✅  </i>"
-                            else:
-                                answer += f"<i>{n+1} - ✅\n</i>"
-                        n += 1
-                    answer += "\n\n"
-                await bot.send_message(javob_berganlar[i][0][0], text=answer)
-                await asyncio.sleep(0.05)

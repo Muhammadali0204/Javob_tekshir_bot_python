@@ -24,7 +24,7 @@ async def salom(call : types.CallbackQuery, state : FSMContext):
                 await bot.send_message(int(admin), f"A`zo bo`linishi kerak bo`lgan kanal bo`yicha nosozlik\n{e}")
     if final_status:
         holat = call.data.split(':')[1]
-        await call.answer("Botdan to`liq mumkin✅", show_alert=True)
+        await call.answer("Botdan to`liq foydalanishingiz mumkin✅", show_alert=True)
         await call.message.delete()
         if holat == "javob_ber":
             await call.message.answer("<b>Yaxshi, test kodini yuboring : </b>", reply_markup=bekor_qilish.bekor_qil)
