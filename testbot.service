@@ -7,7 +7,7 @@ User=ubuntu
 Group=ubuntu
 Type=simple
 WorkingDirectory=/home/ubuntu/Javob_tekshir_bot_python
-ExecStart=/home/ubuntu/Javob_tekshir_bot_python/venv/bin/python app.py
+ExecStart=/home/ubuntu/Javob_tekshir_bot_python/venv/bin/python3 app.py
 
 [Install]
 WantedBy=multi-user.target
