@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 botga = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text="🤖Botga o`tish", url="https://t.me/Javob_tekshir_admin_bot")
+            InlineKeyboardButton(text="🤖Botga o`tish", url="https://t.me/Javob_tekshir_admin_bot?start=premium")
         ]
     ]
 )
@@ -14,7 +14,7 @@ botga2 = InlineKeyboardMarkup(
             InlineKeyboardButton(text="🆓Sinab ko'rish", callback_data="10_kunga_sinash")
         ],
         [
-            InlineKeyboardButton(text="🏆1 oyga obuna bo'lish", url="https://t.me/Javob_tekshir_admin_bot"),
+            InlineKeyboardButton(text="🏆1 oyga obuna bo'lish", url="https://t.me/Javob_tekshir_admin_bot?start=premium"),
         ]
     ]
 )
@@ -22,10 +22,10 @@ botga2 = InlineKeyboardMarkup(
 kanal_qushish = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text="🆕Kanal qo'shish", callback_data="kanal_qushish")
+            InlineKeyboardButton(text="🆕Kanal bog'lash", callback_data="kanal_qushish")
         ],
         [
-            InlineKeyboardButton(text="🚫Kanal qo'shmayman", callback_data="atmen_kanal"),
+            InlineKeyboardButton(text="🚫Kanal bog'lamayman", callback_data="atmen_kanal"),
         ]
     ]
 )
@@ -61,3 +61,4 @@ kanalga_qush = InlineKeyboardMarkup(
         
     ]
 )
+

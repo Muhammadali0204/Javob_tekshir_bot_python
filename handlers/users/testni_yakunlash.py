@@ -63,14 +63,13 @@ async def tugatish(call : types.CallbackQuery):
             db_ts.delete_answers_oddiy_by_test_kodi(test_kodi)
             
             if data_test_oddiy[6] != None:
-                kanallar = db_users.select_user_id(call.from_user.id)[4].split(',')
-                for kanal in kanallar:
-                    try:
-                        await bot.send_message(kanal, text=answer)
-                        await call.message.answer(f"<b>{kanal} kanaliga natijalar yuborildi.</b>")
-                    except Exception as e:
-                        await call.message.answer(f"<b>Xatolik!</b>\n{e}")
-                        await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
+                kanal = db_users.select_user_id(call.from_user.id)[4].split(',')
+                try:
+                    await bot.send_message(kanal[0], text=answer)
+                    await call.message.answer(f"<b><code>{kanal[1]}</code> kanaliga natijalar yuborildi.</b>")
+                except Exception as e:
+                    await call.message.answer(f"<b>Xatolik!</b>\n{e}")
+                    await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
                         
             # javob berganlar -- [(5035718776, 'Muhammad Ali', 'None', '0', None), (5035718776,      112,      4,          ''   )]
  #                                      id            ismi    username  sta  kanal     user_id       kodi    javoblar  xato javoblar          
@@ -149,12 +148,11 @@ async def tugatish(call : types.CallbackQuery):
             
             
             if data_test_blok[7] != None:
-                kanallar = db_users.select_user_id(call.from_user.id)[4].split(',')
-                for kanal in kanallar:
-                    try:
-                        await bot.send_message(kanal, text=answer)
-                        await call.message.answer(f"<b>{kanal} kanaliga natijalar yuborildi.</b>")
-                    except Exception as e:
-                        await call.message.answer(f"<b>Kanalga post joylash bo'yicha xatolik!</b>\n{e}")
-                        await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
+                kanal = db_users.select_user_id(call.from_user.id)[4].split(',')
+                try:
+                    await bot.send_message(kanal[0], text=answer)
+                    await call.message.answer(f"<b><code>{kanal[1]}</code> kanaliga natijalar yuborildi.</b>")
+                except Exception as e:
+                    await call.message.answer(f"<b>Kanalga post joylash bo'yicha xatolik!</b>\n{e}")
+                    await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
             

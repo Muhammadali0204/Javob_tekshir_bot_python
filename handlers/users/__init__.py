@@ -5,9 +5,11 @@ from . import bekor_qil
 from . import ortga_menu
 from . import ism_tahrirlash
 from . import aboutme
-# from . import boglangan_kanal
-# from . import limitlarni_oshirish
+from . import boglangan_kanal
+from . import limitlarni_oshirish
 # from . import kanal_qushish
+# from . import kanal_guruh_turlari
+# from . import kanal_linklari
 from . import sozlamalar
 from . import admingamurojaat
 from . import test_tuzish

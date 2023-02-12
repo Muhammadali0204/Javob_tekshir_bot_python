@@ -101,6 +101,9 @@ class Database:
         
     def update_status_user(self, sana, id):
         self.execute(sql="UPDATE Users SET status = ? WHERE user_id = ?", parameters=(sana, id), commit=True)
+        
+    def update_kanal_user(self, kanal, id):
+        self.execute(sql="UPDATE Users SET kanal = ? WHERE user_id = ?", parameters=(kanal, id), commit=True)
     
     
     

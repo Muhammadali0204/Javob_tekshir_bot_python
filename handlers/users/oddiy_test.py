@@ -21,30 +21,40 @@ async def tur(msg : types.Message, state : FSMContext):
     
 @dp.callback_query_handler(text="avto", state="avto_qul_oddiy")
 async def avto(call : types.CallbackQuery, state : FSMContext):
-    if  foydalanuvchi_limitlari_oddiy[call.from_user.id][1] == 0:
-        await call.answer(text="Afsuski bunday test tuzolmaysiz❗️\nLimitingiz tugagan.Batafsil : \n🛠Sozlamalar/⬆️Limitlarni oshirish", show_alert=True)
+    try:
+        if  foydalanuvchi_limitlari_oddiy[call.from_user.id][1] < 1:
+            await call.answer(text="Afsuski bunday test tuzolmaysiz❗️\nLimitingiz tugagan.Batafsil : \n🛠Sozlamalar/⬆️Limitlarni oshirish", show_alert=True)
+            await call.message.delete()
+            await call.message.answer(text="<b>Test tuzish : </b>",
+            reply_markup=test_turi.tur)
+            await state.set_state("test_turi")
+        else : 
+            await call.message.delete()    
+            await call.message.answer(text="<b>Yaxshi, fan nomini yuboring!</b>\n\n<i>Masalan : Matematika</i>", reply_markup=bekor_qilish.bekor_qil)
+            await state.set_state("fan_nomi_avto_oddiy")
+    except :
         await call.message.delete()
-        await call.message.answer(text="<b>Test tuzish : </b>",
-        reply_markup=test_turi.tur)
-        await state.set_state("test_turi")
-    else : 
-        await call.message.delete()    
-        await call.message.answer(text="<b>Yaxshi, fan nomini yuboring!</b>\n\n<i>Masalan : Matematika</i>", reply_markup=bekor_qilish.bekor_qil)
-        await state.set_state("fan_nomi_avto_oddiy")
+        await call.message.answer("<b>Iltimos /start ni bosing va ism familiyangizni kiriting!</b>", reply_markup=menu.menu)
+        await state.finish()
     
     
 @dp.callback_query_handler(text="qul", state="avto_qul_oddiy")
 async def qul(call : types.CallbackQuery, state : FSMContext):
-    if foydalanuvchi_limitlari_oddiy[call.from_user.id][0] == 0:
+    try:
+        if foydalanuvchi_limitlari_oddiy[call.from_user.id][0] < 1:
+            await call.message.delete()
+            await call.answer(text="Afsuski bunday test tuzolmaysiz❗️\nLimitingiz tugagan.Batafsil : \n🛠Sozlamalar/⬆️Limitlarni oshirish", show_alert=True)
+            await call.message.answer(text="<b>Test tuzish : </b>",
+            reply_markup=test_turi.tur)
+            await state.set_state("test_turi")
+        else :
+            await call.message.delete()
+            await call.message.answer(text="<b>Yaxshi, fan nomini yuboring!</b>\n\n<i>Masalan : Matematika</i>", reply_markup=bekor_qilish.bekor_qil)
+            await state.set_state("fan_nomi_qul_oddiy")
+    except :
         await call.message.delete()
-        await call.answer(text="Afsuski bunday test tuzolmaysiz❗️\nLimitingiz tugagan.Batafsil : \n🛠Sozlamalar/⬆️Limitlarni oshirish", show_alert=True)
-        await call.message.answer(text="<b>Test tuzish : </b>",
-        reply_markup=test_turi.tur)
-        await state.set_state("test_turi")
-    else :
-        await call.message.delete()
-        await call.message.answer(text="<b>Yaxshi, fan nomini yuboring!</b>\n\n<i>Masalan : Matematika</i>", reply_markup=bekor_qilish.bekor_qil)
-        await state.set_state("fan_nomi_qul_oddiy")
+        await call.message.answer("<b>Iltimos /start ni bosing va ism familiyangizni kiriting!</b>", reply_markup=menu.menu)
+        await state.finish()
 
 @dp.callback_query_handler(text="info", state="avto_qul_oddiy")
 async def info(call : types.CallbackQuery, state : FSMContext):

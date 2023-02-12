@@ -12,9 +12,9 @@ db_ts = sqlite.Database("data/Tuzilgan_savollar.db")
 db_bj = sqlite.Database("data/Berilgan_javoblar.db")
 Vaqt = datetime(2023, 1, 1, 0, 0, 0)
 users = db_users.select_all_users()
-premium_narxi = {}
+premium_narxi = ""
 try :
-    premium_narxi[1] = db_users.select_premium_narxi()[0]
+    premium_narxi = db_users.select_premium_narxi()[0]
     limits = db_users.select_limits_oddiy()
     listt = limits[2].split(',')
     Limitlar_oddiy = [int(listt[0]), int(listt[1]), int(listt[2]), int(listt[3])]

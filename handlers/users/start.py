@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters.builtin import CommandStart
 from aiogram.dispatcher import FSMContext
 from utils.misc.isbelgi import isbelgi
 from data.config import ADMINS
-from loader import dp, bot, db_users, foydalanuvchi_limitlari_oddiy, foydalanuvchi_limitlari_blok, Limitlar_oddiy, Limitlar_blok
+from loader import dp, bot, db_users, foydalanuvchi_limitlari_oddiy, foydalanuvchi_limitlari_blok, Limitlar_oddiy, Limitlar_blok, temp_data
 from keyboards.default.menu import menu
 
 @dp.message_handler(CommandStart(), filters.ChatTypeFilter(types.ChatType.PRIVATE))
@@ -37,6 +37,15 @@ async def ism(msg : types.Message, state : FSMContext):
     else:
         await msg.answer("<b>Iltimos ism kiriting.</b>")
         
-@dp.message_handler(CommandStart(), filters.ChatTypeFilter(types.ChatType.SUPERGROUP))
+@dp.message_handler(CommandStart(), filters.ChatTypeFilter(types.ChatType.SUPERGROUP)) # Chalaaa
 async def bot_start(message: types.Message):
+    if temp_data[message.from_user.id] == 'start':
+        try:
+            name_user = message.from_user.full_name
+            chat_id = message.chat.id
+            chat_name = message.chat.full_name
+            db_users.update_kanal_user(f"{chat_id},{chat_name}", message.from_user.id)
+            await message.reply(f"<b>@Javob_tekshir_bot {name_user} tomonidan {chat_name}ga bog'landi")
+        except Exception as e:
+            print(e)
     await message.reply("<b>Bu bot faqat shaxsiy chatda ishlaydi❗️</b>")
