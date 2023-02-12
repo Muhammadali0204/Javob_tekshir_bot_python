@@ -369,7 +369,7 @@ async def buyruq(msg : types.Message):
             
         
                     
-        t += timedelta(seconds=60)
+        t += timedelta(seconds=1800)
         t2 = datetime.now(pytz.timezone("Asia/Tashkent"))
         delta = t - t2
         if int(sek) in range(40, 60):
