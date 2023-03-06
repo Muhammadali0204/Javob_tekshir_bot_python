@@ -1,7 +1,7 @@
 from aiogram.dispatcher import FSMContext
 from aiogram import types
 from keyboards.default.admin import admin_key
-from loader import dp, vaqt_junat
+from loader import dp
 from data.config import ADMINS
 
 

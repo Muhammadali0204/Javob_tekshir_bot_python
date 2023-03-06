@@ -140,8 +140,9 @@ async def salommm(msg : Message, state : FSMContext):
                     await state.finish()
                     
                     user = db_users.select_user_id(msg.from_user.id)
-                    if user[3] != '0' and user[3] != '-1':
-                        answer = "<b>Bu test natijasi kanalingizga joylansinmi ❓</b>\n<i>*Testni yakunlaganingizda, test natijasi bot tomonidan kanalga joylanadi.</i>"
+                    if user[3] != '0' and user[3] != '-1' and user[4] != None:
+                        kanal = user[4].split(',')[1]
+                        answer = f"<b>Bu test natijasi {kanal} kanal/guruhingizga joylansinmi ❓</b>\n\n<i>*Testni yakunlaganingizda, test natijasi bot tomonidan kanalga joylanadi.</i>"
                         await msg.answer(text=answer, reply_markup=post(test_kodi, "Blok_test"))
                     
                     temp_data[msg.from_user.id] = None

@@ -44,7 +44,6 @@ async def kanal(msg : types.Message, state : FSMContext):
                 admins = await bot.get_chat_administrators(chat_id)
                 for admin in admins:
                     if admin['user']['id'] == msg.from_user.id:
-                        print(msg.from_user.id)
                         title = chat['title']
                         answer = f"<b>🎉Tabriklaymiz kanalingiz muvaffaqqiyatli bog'landi.✅</b>\n\n<b>Kanal : </b><i>{title}</i>\n\n*Botni kanalingizdan chiqarib yubormang❗️"
                         db_users.update_kanal_user(f"{chat_id},{title}", msg.from_user.id)
@@ -61,30 +60,7 @@ async def kanal(msg : types.Message, state : FSMContext):
     await msg.answer("<b>Siz bu kanalning admini emassiz ❌</b>", reply_markup=menu)
     await state.finish()
         
-
-@dp.message_handler(state="o_guruh_havolasi")
-async def kanal(msg : types.Message, state : FSMContext):
-    havola = msg.text
-    try:
-        admins = await bot.get_chat_administrators(havola)
-        for admin in admins:
-            if msg.from_user.id == admin['user']['id']:
-                await bot.send_message(havola, "Javob tekshir bot")
-                chat = await bot.get_chat(havola)
-                chat_id = chat['id']
-                title = chat['title']
-                username = chat['username']
-                answer = f"<b>🎉Tabriklaymiz guruhingiz muvaffaqqiyatli bog'landi.✅</b>\n\n<b>Guruh : </b><i>{title}</i>\n<b>Username : </b><i>@{username}</i>\n\n*Botni guruhingizdan chiqarib yubormang❗️"
-                db_users.update_kanal_user(f"{chat_id},{title}(@{username})", msg.from_user.id)
-                await msg.answer(answer, reply_markup=menu)
-                await state.finish()
-                return
-    except :
-        await msg.answer("<b>Botni guruhingizga qo'shmagansiz ❌</b>\n\n<i>Qayta urinib ko'ring</i>", reply_markup=menu)
-        await state.finish()
-        return
-    await msg.answer("<b>Siz bu guruhning admini emassiz ❌</b>", reply_markup=menu)
-    await state.finish()
+    
 
 
     

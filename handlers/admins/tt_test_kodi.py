@@ -6,7 +6,7 @@ from data.config import ADMINS
 from aiogram import types
 
 
-@dp.message_handler(text="Tt test kodi bn", chat_id = ADMINS)
+@dp.message_handler(text="Test haqida ma'lumot", chat_id = ADMINS)
 async def admin(msg : types.Message, state : FSMContext):
     await msg.answer(text="<b>Test kodini yuboring : </b>", reply_markup=bekor_qil)
     await state.set_state("tt_test_kodi")
@@ -22,6 +22,6 @@ async def admin(msg : types.Message, state : FSMContext):
     elif test_blok != None:
         pass
     else:
-        await msg.answer("<b>Bunday test mavjudmas</b>", reply_markup=admin_key)
+        await msg.answer("<b>Bunday test mavjud emas</b>", reply_markup=admin_key)
         
     await state.finish()

@@ -37,15 +37,28 @@ async def ism(msg : types.Message, state : FSMContext):
     else:
         await msg.answer("<b>Iltimos ism kiriting.</b>")
         
+        
+
 @dp.message_handler(CommandStart(), filters.ChatTypeFilter(types.ChatType.SUPERGROUP)) # Chalaaa
-async def bot_start(message: types.Message):
-    if temp_data[message.from_user.id] == 'start':
-        try:
-            name_user = message.from_user.full_name
-            chat_id = message.chat.id
-            chat_name = message.chat.full_name
-            db_users.update_kanal_user(f"{chat_id},{chat_name}", message.from_user.id)
-            await message.reply(f"<b>@Javob_tekshir_bot {name_user} tomonidan {chat_name}ga bog'landi")
-        except Exception as e:
-            print(e)
-    await message.reply("<b>Bu bot faqat shaxsiy chatda ishlaydi❗️</b>")
+async def bot_start(msg: types.Message):
+    try :
+        if temp_data[int(msg.text.split(' ')[1])] == 'start_bosadi':
+            try:
+                admins = await bot.get_chat_administrators(msg.chat.id)
+                for admin in admins:
+                    if msg.from_user.id == admin['user']['id']:
+                        name_user = msg.from_user.full_name
+                        chat_id = msg.chat.id
+                        chat_name = msg.chat.full_name
+                        username = msg.chat.username
+                        if username:
+                            db_users.update_kanal_user(f"{chat_id},{chat_name}(@{username})", msg.from_user.id)
+                        else:
+                            db_users.update_kanal_user(f"{chat_id},{chat_name}", msg.from_user.id)
+                        await msg.reply(f"<b>@Javob_tekshir_bot <u>{name_user}</u> tomonidan <u>{chat_name}</u> guruhiga bog'landi</b>")
+                        return
+            except Exception as e:
+                print(e)
+        await msg.reply("<b>Bu bot faqat shaxsiy chatda ishlaydi❗️</b>")
+    except :
+        await msg.reply("<b>Bu bot faqat shaxsiy chatda ishlaydi</b>")

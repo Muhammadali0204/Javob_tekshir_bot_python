@@ -147,15 +147,21 @@ class Database:
         sql = f"UPDATE {test_turi} SET faollik = 1 WHERE test_kodi = ?"
         self.execute(sql=sql, parameters=(test_kodi,), commit=True)
         
-    def all_tests_oddiy_sana(self):
-        return self.execute(sql="SELECT * FROM Oddiy_test WHERE avto_vaqt LIKE '%.%' ", fetchall=True)
-    def all_tests_blok_sana(self):
-        return self.execute(sql="SELECT * FROM Blok_test WHERE avto_vaqt LIKE '%.%' ", fetchall=True)
+    def all_tests_oddiy_sana(self, sana):
+        return self.execute(sql="SELECT * FROM Oddiy_test WHERE avto_vaqt = ? ",parameters=(sana,), fetchall=True)
+    def all_tests_blok_sana(self, sana):
+        return self.execute(sql="SELECT * FROM Blok_test WHERE avto_vaqt = ? ",parameters=(sana,), fetchall=True)
     
     def all_tests_oddiy_vaqt(self):
         return self.execute(sql="SELECT * FROM Oddiy_test WHERE avto_vaqt LIKE '%,%' ", fetchall=True)
     def all_tests_blok_vaqt(self):
         return self.execute(sql="SELECT * FROM Blok_test WHERE avto_vaqt LIKE '%,%' ", fetchall=True)
+    
+    def select_tests_by_user_id_oddiy(self, id):
+        return self.execute(sql="SELECT * FROM Oddiy_test WHERE user_id = ?", parameters=(id,), fetchall=True)
+    
+    def select_tests_by_user_id_blok(self, id):
+        return self.execute(sql="SELECT * FROM Blok_test WHERE user_id = ?", parameters=(id,), fetchall=True)
 
 # Berilgan javoblar
 

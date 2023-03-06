@@ -66,7 +66,7 @@ async def tugatish(call : types.CallbackQuery):
                 kanal = db_users.select_user_id(call.from_user.id)[4].split(',')
                 try:
                     await bot.send_message(kanal[0], text=answer)
-                    await call.message.answer(f"<b><code>{kanal[1]}</code> kanaliga natijalar yuborildi.</b>")
+                    await call.message.answer(f"<b><code>{kanal[1]}</code> kanal/guruhiga natijalar yuborildi.</b>")
                 except Exception as e:
                     await call.message.answer(f"<b>Xatolik!</b>\n{e}")
                     await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
@@ -151,7 +151,7 @@ async def tugatish(call : types.CallbackQuery):
                 kanal = db_users.select_user_id(call.from_user.id)[4].split(',')
                 try:
                     await bot.send_message(kanal[0], text=answer)
-                    await call.message.answer(f"<b><code>{kanal[1]}</code> kanaliga natijalar yuborildi.</b>")
+                    await call.message.answer(f"<b><code>{kanal[1]}</code> kanal/guruhiga natijalar yuborildi.</b>")
                 except Exception as e:
                     await call.message.answer(f"<b>Kanalga post joylash bo'yicha xatolik!</b>\n{e}")
                     await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")

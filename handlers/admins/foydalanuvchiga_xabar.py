@@ -1,4 +1,4 @@
-from loader import db_users, dp, bot, temp_data
+from loader import dp, bot, temp_data
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from keyboards.default.admin import admin_key
