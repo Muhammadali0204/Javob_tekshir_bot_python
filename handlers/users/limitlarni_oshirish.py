@@ -3,14 +3,14 @@ from aiogram.dispatcher import FSMContext
 from keyboards.inline.botgautish import botga3, botga2, kanal_qushish
 from keyboards.default import menu, bekor_qilish, sozlamalar
 from loader import dp, db_users, Limitlar_oddiy, Limitlar_blok, premium_narxi, temp_data, bot, foydalanuvchi_limitlari_blok, foydalanuvchi_limitlari_oddiy
-import pytz, asyncio
+import pytz
+import asyncio
 from datetime import datetime, timedelta
 
 
-
 @dp.message_handler(state="sozlamalar", text="⬆️Limitlarni oshirish")
-async def limit(msg : types.Message, state : FSMContext):
-    
+async def limit(msg: types.Message, state: FSMContext):
+
     user = db_users.select_user_id(msg.from_user.id)
     if user == None:
         await msg.answer("<b>Iltimos /start ni bosing va ism familiyangizni kiriting!</b>", reply_markup=menu.menu)
@@ -49,16 +49,16 @@ async def limit(msg : types.Message, state : FSMContext):
         answer += f"<b>Bir oylik premium obuna narxi : <i>{premium_narxi}</i> so'm\n\n</b>"
         answer += "<i>Bepul 10 kun muddatga sinab ko'rishingiz mumkin!\n*Bepul sinab ko'rish imkoni faqat bir marta</i>"
         await msg.answer(text=answer, reply_markup=botga2, disable_web_page_preview=True)
-        
+
     else:
         answer = f"<b>🏆Siz premium obunachisiz!\n\nObunaning muddati : <i>{user[3]} gacha!</i></b>"
         if user[4] == None:
             answer += "\n\n<i>❗️Hech qanday kanal yoki guruh bog'lanmagan.\nKanal yoki guruh bog'lamoqchi bo'lsangiz\n\n<i>🛠Sozlamalar/🖇Bog'langan kanal/guruh</i> \n\nbo'limiga o'ting.</i>"
         await msg.answer(answer, reply_markup=sozlamalar.sozlama_keyboard)
-    
-    
+
+
 @dp.callback_query_handler(text="10_kunga_sinash", state="sozlamalar")
-async def sinov(call : types.CallbackQuery, state : FSMContext):
+async def sinov(call: types.CallbackQuery, state: FSMContext):
     user = db_users.select_user_id(call.from_user.id)
     if user[3] == '0':
         t = datetime.now(pytz.timezone("Asia/Tashkent"))

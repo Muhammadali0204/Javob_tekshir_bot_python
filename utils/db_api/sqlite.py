@@ -147,6 +147,10 @@ class Database:
         sql = f"UPDATE {test_turi} SET faollik = 1 WHERE test_kodi = ?"
         self.execute(sql=sql, parameters=(test_kodi,), commit=True)
         
+    def update_test_faollikk(self, test_turi, test_kodi, faollik):
+        sql = f"UPDATE {test_turi} SET faollik = ? WHERE test_kodi = ?"
+        self.execute(sql=sql, parameters=(faollik,test_kodi), commit=True)
+        
     def all_tests_oddiy_sana(self, sana):
         return self.execute(sql="SELECT * FROM Oddiy_test WHERE avto_vaqt = ? ",parameters=(sana,), fetchall=True)
     def all_tests_blok_sana(self, sana):
@@ -162,6 +166,14 @@ class Database:
     
     def select_tests_by_user_id_blok(self, id):
         return self.execute(sql="SELECT * FROM Blok_test WHERE user_id = ?", parameters=(id,), fetchall=True)
+    
+    def update_fan_nomi_oddiy_test(self, test_kodi, yangi_nom):
+        self.execute("UPDATE Oddiy_test SET fan_nomi = ? WHERE test_kodi = ?", parameters=(yangi_nom, test_kodi), commit=True)
+        
+    def update_fan_nomi_blok_test(self, test_kodi, yangi_nom):
+        self.execute("UPDATE Blok_test SET fan_nomi = ? WHERE test_kodi = ?", parameters=(yangi_nom, test_kodi), commit=True)
+    
+    
 
 # Berilgan javoblar
 
@@ -213,6 +225,12 @@ class Database:
     def delete_answers_blok_by_test_kodi(self, test_kodi):
         sql = "DELETE FROM Blok_test WHERE test_kodi = ?"
         self.execute(sql, parameters=(test_kodi,), commit=True)
+        
+    def count_answers_oddiy_test(self, test_kodi):
+        return self.execute("SELECT COUNT(user_id) FROM Oddiy_test WHERE test_kodi = ?", parameters=(test_kodi,), fetchone=True)
+    
+    def count_answers_blok_test(self, test_kodi):
+        return self.execute("SELECT COUNT(user_id) FROM Blok_test WHERE test_kodi = ?", parameters=(test_kodi,), fetchone=True)
     
     
 

@@ -5,5 +5,8 @@ reset_channel = InlineKeyboardMarkup(
         [
             InlineKeyboardButton(text="♻️O'zgartirish", callback_data="qayta_kanal_kiritish"),
         ],
+        [
+            InlineKeyboardButton(text="🔴Kanal/guruhni o'chirish", callback_data="kanal/guruhni_ochirish")
+        ]
     ]
 )

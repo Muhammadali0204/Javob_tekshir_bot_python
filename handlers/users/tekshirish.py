@@ -6,13 +6,14 @@ from aiogram.dispatcher import FSMContext
 from keyboards.inline import info
 from aiogram import types, filters
 
+
 @dp.callback_query_handler(filters.ChatTypeFilter(types.ChatType.PRIVATE), regexp="obunani_tekshir:+")
-async def salom(call : types.CallbackQuery, state : FSMContext):
+async def salom(call: types.CallbackQuery, state: FSMContext):
     azo_bulmagan_kanallar = []
     id = call.from_user.id
     final_status = True
     for kanal in kanallar:
-        try :
+        try:
             status = await check(user_id=id, channel=kanal)
             final_status *= status
             if not status:
@@ -31,13 +32,14 @@ async def salom(call : types.CallbackQuery, state : FSMContext):
             await state.set_state("test_kodi")
         elif holat == "test_tuz":
             await call.message.answer(
-            text="<b>Yaxshi, qanday test tuzmoqchisiz?</b>",reply_markup= info.info
+                text="<b>Yaxshi, qanday test tuzmoqchisiz?</b>", reply_markup=info.info
             )
             await call.message.answer("<b>Tanlang: 👇</b>", reply_markup=test_turi.tur)
             await state.set_state("test_turi")
     else:
         await call.answer("Siz barcha kanallarga a`zo bo`lmadingiz ❗️", show_alert=True)
-        
+
+
 @dp.callback_query_handler(filters.ChatTypeFilter(types.ChatType.PRIVATE), regexp="obunani_tekshir:+", state='*')
-async def salom(call : types.CallbackQuery):
+async def salom(call: types.CallbackQuery):
     await call.message.delete()

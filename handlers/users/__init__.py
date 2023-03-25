@@ -1,7 +1,7 @@
 from . import commands
 from . import start
 from . import bekor_qil
-from . import photo
+# from . import photo
 from . import ortga_menu
 from . import ism_tahrirlash
 from . import aboutme
@@ -23,6 +23,8 @@ from . import add_javob_blok
 from . import add_javob_oddiy
 from . import add_javob
 from . import mytests
+from . import my_tests_oddiy
+from . import my_tests_blok
 from . import tekshirish
 from . import botdan_foydalanish
 from . import testni_yakunlash

@@ -14,9 +14,7 @@ async def buyruq(msg : types.Message):
     await msg.delete()
     t = datetime.now(pytz.timezone("Asia/Tashkent"))
     soat_minut = t.strftime("%H:%M")
-    # soat_minut = '00:00'
     sana = t.strftime("%d.%m.%Y")
-    # sana = '16.03.2023'
     sek = t.strftime("%S")
     
     for admin in ADMINS:
@@ -115,14 +113,21 @@ async def buyruq(msg : types.Message):
                     db_bj.delete_answers_oddiy_by_test_kodi(test_kodi)
                     db_ts.delete_answers_oddiy_by_test_kodi(test_kodi)
 
-                    if oddiy_test[6] != None:
-                        kanal = db_users.select_user_id(oddiy_test[0])[4].split(',')
-                        try:
-                            await bot.send_message(kanal[0], text=answer)
-                            await bot.send_message(oddiy_test[0],f"<b><code>{kanal[1]}</code> kanal/guruhiga natijalar yuborildi.</b>")
-                        except Exception as e:
-                            await bot.send_message(oddiy_test[0],f"Kanalga post joylash bo'yicha xatolik!\n{e}")
-                            await bot.send_message(oddiy_test[0], "<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
+                    if oddiy_test[6] == '1':
+                        kanal = db_users.select_user_id(oddiy_test[0])[4]
+                        if kanal == None:
+                            try : 
+                                await bot.send_message(oddiy_test[0],f"<b>Kanalga post joylash bo'yicha xatolik!\n\n</b><i>Kanal yoki guruh bog'lanmagan ❌</i>")  
+                            except:
+                                pass
+                        else:
+                            kanal = kanal.split(",")
+                            try:
+                                await bot.send_message(kanal[0], text=answer)
+                                await bot.send_message(oddiy_test[0],f"<b><code>{kanal[1]}</code> kanal/guruhiga natijalar yuborildi.</b>")
+                            except Exception as e:
+                                await bot.send_message(oddiy_test[0],f"Kanalga post joylash bo'yicha xatolik!\n{e}")
+                                await bot.send_message(oddiy_test[0], "<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
                     
                     await asyncio.sleep(0.05)
                 else:
@@ -220,18 +225,25 @@ async def buyruq(msg : types.Message):
                     except:
                         pass
                     
-                    if data_test_blok[7] != None:
-                        kanal = db_users.select_user_id(data_test_blok[0])[4].split(',')
-                        try:
-                            await bot.send_message(kanal[0], text=answer)
-                            await bot.send_message(data_test_blok[0],f"<b><code>{kanal[1]}</code> kanal/guruhiga natijalar yuborildi.</b>")
-                        except Exception as e:
-                            await bot.send_message(data_test_blok[0],f"Kanalga post joylash bo'yicha xatolik!\n{e}")
-                            await bot.send_message(data_test_blok[0],"<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
+                    if data_test_blok[7] == '1':
+                        kanal = db_users.select_user_id(data_test_blok[0])[4]
+                        if kanal == None:
+                            try : 
+                                await bot.send_message(data_test_blok[0],f"<b>Kanalga post joylash bo'yicha xatolik!\n\n</b><i>Kanal yoki guruh bog'lanmagan ❌</i>")  
+                            except:
+                                pass
+                        else:
+                            kanal = kanal.split(",")
+                            try:
+                                await bot.send_message(kanal[0], text=answer)
+                                await bot.send_message(data_test_blok[0],f"<b><code>{kanal[1]}</code> kanal/guruhiga natijalar yuborildi.</b>")
+                            except Exception as e:
+                                await bot.send_message(data_test_blok[0],f"Kanalga post joylash bo'yicha xatolik!\n{e}")
+                                await bot.send_message(data_test_blok[0], "<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
                     
                 else:
                     try:
-                        await bot.send_message(oddiy_test[0],f"<b>{test_kodi} - kodli test yakunlandi</b>✅\n\n<i>Hech kim javob bermagan</i>")
+                        await bot.send_message(data_test_blok[0],f"<b>{test_kodi} - kodli test yakunlandi</b>✅\n\n<i>Hech kim javob bermagan</i>")
                         db_ts.delete_answers_blok_by_test_kodi(test_kodi)
                         await asyncio.sleep(0.05)
                     except :

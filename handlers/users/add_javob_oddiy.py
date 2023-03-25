@@ -9,10 +9,8 @@ from loader import dp, db_users, db_bj, db_ts, bot, temp_data, kitoblar
 import random
 
 
-
-
 @dp.message_handler(state="javoblar_junatiladi")
-async def keldi_javoblar(msg : types.Message, state : FSMContext):
+async def keldi_javoblar(msg: types.Message, state: FSMContext):
     berilgan_javob = msg.text
     if berilgan_javob.isalpha():
         berilgan_javob_size = len(berilgan_javob)
@@ -33,8 +31,9 @@ async def keldi_javoblar(msg : types.Message, state : FSMContext):
     else:
         await msg.answer("<b>Testning javobi faqat lotin harflaridan iborat!</b>\n<i>Qayta kiriting yoki bekor qiling.</i>", reply_markup=bekor_qil)
 
+
 @dp.callback_query_handler(text='yes', state="berilgan_javobni_tasdiqlash")
-async def tekshir(call : types.CallbackQuery, state : FSMContext):
+async def tekshir(call: types.CallbackQuery, state: FSMContext):
     kod = temp_data[call.from_user.id][0]
     data_test = db_ts.select_test_oddiy_by_test_kodi(kod)
     if data_test == None:
@@ -42,7 +41,7 @@ async def tekshir(call : types.CallbackQuery, state : FSMContext):
         await call.message.delete()
         await call.message.answer("<b>Afsuski test yakunlandi❌</b>\n<i>Biroz kechikdingiz!</i>", reply_markup=menu)
         await state.finish()
-    else :
+    else:
         bergan_javobi = temp_data[call.from_user.id][2]
         aniq_javob_size = len(data_test[3])
         aniq_javob = data_test[3]
@@ -52,13 +51,14 @@ async def tekshir(call : types.CallbackQuery, state : FSMContext):
         for i in range(0, aniq_javob_size):
             if bergan_javobi[i] == aniq_javob[i]:
                 tuplagan_bal += 1
-            else :
+            else:
                 xato_javoblari_list.append(i+1)
         xato_javoblari += ",".join([
             f"{item}" for item in xato_javoblari_list
         ])
         try:
-            db_bj.add_javob_oddiy(call.from_user.id, kod, tuplagan_bal, xato_javoblari)
+            db_bj.add_javob_oddiy(call.from_user.id, kod,
+                                  tuplagan_bal, xato_javoblari)
         except Exception as e:
             print(e)
         answer = f"🔑<b>Test kodi : </b><i>{kod}</i>\n🗂<b>Test turi : </b><i>Oddiy</i>\n{kitoblar[random.randint(0, 4)]}<b>Fan nomi : </b><i>{data_test[2]}</i>\n✅<b>To`g`ri javoblar soni : </b><i>{tuplagan_bal} ta</i>\n❌<b>Xato javoblar soni : </b><i>{aniq_javob_size - tuplagan_bal} ta\n\n</i>"
@@ -78,9 +78,10 @@ async def tekshir(call : types.CallbackQuery, state : FSMContext):
             username = f"@{user[2]}"
         answer_admin = f"<b>{kod} - testga </b><i>{user[1]}</i><b><i>({username})</i> javob jo`natdi.</b>"
         await bot.send_message(data_test[0], answer_admin, reply_markup=test_owner(kod))
-        
+
+
 @dp.callback_query_handler(text='no', state="berilgan_javobni_tasdiqlash")
-async def tekshir(call : types.CallbackQuery, state : FSMContext):
+async def tekshir(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
     await call.message.answer("<b>Javoblarni tog`rilab, qayta yuboring!\n</b>", reply_markup=bekor_qil)
     await state.set_state("javoblar_junatiladi")

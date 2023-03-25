@@ -8,8 +8,9 @@ from keyboards.inline.javob_yuborishni_boshlash import boshlash
 from loader import dp, db_users, db_bj, db_ts, bot, temp_data, kitoblar
 import random
 
+
 @dp.callback_query_handler(text="javob_yuborishni_boshla", state="javob_yuborishni_boshlash_blok")
-async def salom(call : types.CallbackQuery, state : FSMContext):
+async def salom(call: types.CallbackQuery, state: FSMContext):
     # temp_data[id] = [fanlar_soni, tayyor_fan_nomlari, haqiqiy_javoblar,  berilgan_javob, nechinchi_savol, test_kodi]
     #                        0              1                 2                     3               4           5
     q = temp_data[call.from_user.id][1]
@@ -18,17 +19,18 @@ async def salom(call : types.CallbackQuery, state : FSMContext):
     await call.message.delete()
     await call.message.answer(text=answer)
     await state.set_state("javob_yuborish_blok")
-    
+
 
 @dp.callback_query_handler(text="javob_yuborishni_bekor_qil", state="javob_yuborishni_boshlash_blok")
-async def salommm(call : types.CallbackQuery, state : FSMContext):
+async def salommm(call: types.CallbackQuery, state: FSMContext):
     await call.answer("Bekor qilindi❌")
     await call.message.delete()
     await call.message.answer("Bekor qilindi❌", reply_markup=menu)
     await state.finish()
-    
+
+
 @dp.message_handler(state="javob_yuborish_blok")
-async def javoblar(msg : types.Message, state : FSMContext):
+async def javoblar(msg: types.Message, state: FSMContext):
     berilgan_javob = msg.text
     if berilgan_javob.isalpha():
         idd = msg.from_user.id
@@ -52,9 +54,10 @@ async def javoblar(msg : types.Message, state : FSMContext):
             await msg.answer(f"<b>Bu testning javoblari soni {haqiqiy_javob_uzunligi} ta.\nAmmo siz {berilgan_javob_size} ta javob yubordingiz❌</b>\n<i>Savollar soniga mos holda javoblarni qayta yuboring : </i>", reply_markup=bekor_qil)
     else:
         await msg.answer("<b>Testning javobi faqat lotin harflaridan iborat!</b>\n<i>Qayta kiriting yoki bekor qiling.</i>", reply_markup=bekor_qil)
-        
+
+
 @dp.callback_query_handler(text="yes", state="berilgan_javobni_tasdiqlash_blok")
-async def yes(call : types.CallbackQuery, state : FSMContext):
+async def yes(call: types.CallbackQuery, state: FSMContext):
     temp_data[call.from_user.id][4] += 1
     if temp_data[call.from_user.id][4] != temp_data[call.from_user.id][0]:
         q = temp_data[call.from_user.id][1]
@@ -86,7 +89,7 @@ async def yes(call : types.CallbackQuery, state : FSMContext):
             xato_javoblari = ""
             for i in range(0, fanlar_soni):
                 temp_bali = 0
-                
+
                 for j in range(0, len(haqiqiy_javoblar[i])):
                     if haqiqiy_javoblar[i][j] == berilgan_javob[i][j]:
                         temp_bali += 1
@@ -96,25 +99,27 @@ async def yes(call : types.CallbackQuery, state : FSMContext):
                             temp_xato_javoblari.append(j+1+int(gap[2]))
                         else:
                             temp_xato_javoblari.append(j+1)
-                tuplagan_ballari_temp.append(round(float(beriladigan_ballar[i]) * temp_bali,4))
-            
+                tuplagan_ballari_temp.append(
+                    round(float(beriladigan_ballar[i]) * temp_bali, 4))
+
             tuplagan_ballari = ",".join([
-                    f"{item}" for item in tuplagan_ballari_temp
-                    ])
+                f"{item}" for item in tuplagan_ballari_temp
+            ])
             xato_javoblari = ",".join([
-                    f"{item}" for item in temp_xato_javoblari
-                    ])
+                f"{item}" for item in temp_xato_javoblari
+            ])
             summ = sum(tuplagan_ballari_temp)
             try:
-                db_bj.add_javob_blok(user_id, test_kodi, tuplagan_ballari, xato_javoblari, summ)
+                db_bj.add_javob_blok(user_id, test_kodi,
+                                     tuplagan_ballari, xato_javoblari, summ)
             except Exception as e:
                 print(e)
-            
+
             answer = f"🔑<b>Test kodi : </b><i>{test_kodi}</i>\n🗂<b>Test turi : </b><i>Blok test</i>\n✅<b>Sizning natijangiz : </b>\n"
             for qwe in range(0, len(fan_nomlari)):
                 answer += f"<b>{kitoblar[random.randint(0,4)]}{fan_nomlari[qwe]} : </b><i>{tuplagan_ballari_temp[qwe]} ball</i>\n"
             answer += f"<b>Umumiy natijangiz : </b><i>{summ} ball</i>\n\n"
-            
+
             vergul = data_test[5].find(',')
             if vergul != -1:
                 vaqt = data_test[5].split(',')
@@ -131,11 +136,10 @@ async def yes(call : types.CallbackQuery, state : FSMContext):
                 username = f"@{user[2]}"
             answer_admin = f"<b>{test_kodi} - testga </b><i>{user[1]}</i><b><i>({username})</i> javob jo'natdi.</b>"
             await bot.send_message(data_test[0], answer_admin, reply_markup=test_owner(test_kodi))
-            
-            
-            
+
+
 @dp.callback_query_handler(text='no', state="berilgan_javobni_tasdiqlash_blok")
-async def tekshir(call : types.CallbackQuery, state : FSMContext):
+async def tekshir(call: types.CallbackQuery, state: FSMContext):
     temp_data[call.from_user.id][3].pop(-1)
     await call.message.delete()
     await call.message.answer("<b>Javoblarni tog`rilab, qayta yuboring!\n</b>", reply_markup=bekor_qil)
