@@ -2,10 +2,11 @@ from aiogram import types
 from aiogram.types import ReplyKeyboardRemove
 from keyboards.default.test_turi import tur
 from keyboards.default.menu import menu
+from keyboards.default import test_turi
 from keyboards.inline.avto_qulda import avto_qul, avto_qul2
 from keyboards.default.bekor_qilish import fanlar_soni
 from aiogram.dispatcher import FSMContext
-from loader import dp, foydalanuvchi_limitlari_blok, temp_data
+from loader import dp,bot, foydalanuvchi_limitlari_blok, temp_data
 
 
 @dp.message_handler(text="📚Blok test", state="test_turi")
@@ -16,6 +17,13 @@ async def bloktest(msg: types.Message, state: FSMContext):
         reply_markup=avto_qul
     )
     await state.set_state("avto_qul_blok")
+    
+    
+@dp.message_handler(state="test_turi", content_types=types.ContentTypes.ANY)
+async def jhfjkd(msg : types.Message):
+    await msg.delete()
+    await msg.answer("<b>Quyidagi tugmalardan foydalaning 👇</b>", reply_markup=test_turi.tur)
+    
 
 
 @dp.callback_query_handler(text="avto", state="avto_qul_blok")
@@ -70,6 +78,6 @@ async def info(call: types.CallbackQuery, state: FSMContext):
 async def ortga(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
     await call.message.answer(
-        text="Qanday test tuzmoqchisiz?", reply_markup=tur
+        text="<b>Qanday test tuzmoqchisiz ? </b>", reply_markup=tur
     )
     await state.set_state("test_turi")

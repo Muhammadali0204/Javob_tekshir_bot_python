@@ -118,7 +118,7 @@ async def salommm(msg: Message, state: FSMContext):
                     t = t + timedelta(days=3)
                     sana = t.strftime("%d.%m.%Y")
                     db_ts.add_test_blok(
-                        msg.from_user.id, test_kodi, a0, a1, a3, sana, 1, None)
+                        msg.from_user.id, test_kodi, a0, a1, a3, sana, 1, 0)
                     await msg.answer("<b>Test bazaga qo`shildi✅</b>")
                     foydalanuvchi_limitlari_blok[msg.from_user.id][0] -= 1
                     fanlar = temp_data[msg.from_user.id][0]

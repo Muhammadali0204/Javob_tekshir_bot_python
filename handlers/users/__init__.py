@@ -1,5 +1,6 @@
 from . import commands
 from . import start
+from . import yuqoridagi_tugma
 from . import bekor_qil
 # from . import photo
 from . import ortga_menu

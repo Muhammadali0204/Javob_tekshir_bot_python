@@ -108,3 +108,28 @@ async def tahrirlash(msg: types.Message, state: FSMContext):
             await msg.answer("<b>Fan nomidagi belgilar soni 2 tadan 30 tagacha bo`lishi mumkin❗️</b>\n<i>Qayta yuboring yoki /cancel ni bosing.</i>", reply_markup=bekor_qilish.bekor_qil)
     else:
         await msg.answer("<b>Faqat harf va bo`sh joy yuborishingiz mumkin❗️</b>\n<i>Qayta yuboring yoki /cancel ni bosing.</i>", reply_markup=bekor_qilish.bekor_qil)
+        
+    
+    
+@dp.callback_query_handler(regexp="kanal_guruh_joylash_yoqish:+", state="blok_testni_tahrirlash")
+async def kkncsknskd(call : types.CallbackQuery, state  :FSMContext):
+    test_kodi = call.data.split(':')[1]
+    user = db_users.select_user_id(call.from_user.id)
+    answer = f"{test_kodi} - test natijasi {user[4].split(',')[1]} kanal/guruhingizga avtomatik ravishda joylanadi ✅"
+    db_ts.update_test_post("Blok_test", test_kodi, "1")
+    await call.answer(answer, show_alert=True)
+    await call.message.delete()
+    await call.message.answer("<b><i>Menu : </i></b>", reply_markup=menu.menu)
+    await state.finish()
+    
+    
+@dp.callback_query_handler(regexp="kanal_guruh_joylash_ochirish:+", state="blok_testni_tahrirlash")
+async def kkncsknskd(call : types.CallbackQuery, state  :FSMContext):
+    test_kodi = call.data.split(':')[1]
+    user = db_users.select_user_id(call.from_user.id)
+    answer = f"{test_kodi} - test natijasi {user[4].split(',')[1]} kanal/guruhingizga avtomatik ravishda joylash o'chirildi ❎"
+    db_ts.update_test_post("Blok_test", test_kodi, "0")
+    await call.answer(answer, show_alert=True)
+    await call.message.delete()
+    await call.message.answer("<b><i>Menu : </i></b>", reply_markup=menu.menu)
+    await state.finish()

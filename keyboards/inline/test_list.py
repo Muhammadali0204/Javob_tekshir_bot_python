@@ -16,7 +16,7 @@ def test_listt_blok(test_list_blok):
     )
     for blok in test_list_blok:
         soni = len(blok[2].split(','))
-        listt.insert(InlineKeyboardButton(text=f"{blok[1]}-{soni}", callback_data=blok[1]))
+        listt.insert(InlineKeyboardButton(text=f"{blok[1]} - {soni} ta fan", callback_data=blok[1]))
     listt.insert(InlineKeyboardButton(text="◀️Ortga", callback_data="ortga"))
         
     return listt

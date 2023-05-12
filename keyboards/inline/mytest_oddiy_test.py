@@ -11,9 +11,8 @@ def test_list1(test):
         nomm.insert(InlineKeyboardButton(text="🔢Javob berganlar soni", callback_data=f"javob_berganlar_soni:{test[1]}"))
         nomm.insert(InlineKeyboardButton(text="♻️Fan nomini tahrirlash", callback_data=f"fan_nomini_tahrirlash:{test[1]}"))
         
-        if test[6] == None and user[3] == '0':
-            pass
-        elif test[6] == None and user[3] != '0' and user[4] != None:
+       
+        if test[6] == "0" and user[3] != '0' and user[4] != None:
             nomm.insert(InlineKeyboardButton(text="🟢Kanal/guruhga joylashni yoqish", callback_data=f"kanal_guruh_joylash_yoqish:{test[1]}"))
         elif test[6] == '1' and user[4] != None:
             nomm.insert(InlineKeyboardButton(text="🔴Kanal/guruhga joylashni o'chirish", callback_data=f"kanal_guruh_joylash_ochirish:{test[1]}"))
@@ -21,7 +20,7 @@ def test_list1(test):
     else :
         nomm.insert(InlineKeyboardButton(text="🔢Javob berganlar soni", callback_data=f"javob_berganlar_soni:{test[1]}"))
         nomm.insert(InlineKeyboardButton(text="♻️Fan nomini tahrirlash", callback_data=f"fan_nomini_tahrirlash:{test[1]}"))
-        if test[6] == None and user[3] != '0' and user[4] != None:
+        if test[6] == '0' and user[3] != '0' and user[4] != None:
             nomm.insert(InlineKeyboardButton(text="🟢Kanal/guruhga joylashni yoqish", callback_data=f"kanal_guruh_joylash_yoqish:{test[1]}"))
         elif test[6] == '1' and user[4] != None:
             nomm.insert(InlineKeyboardButton(text="🔴Kanal/guruhga joylashni o'chirish", callback_data=f"kanal_guruh_joylash_ochirish:{test[1]}"))

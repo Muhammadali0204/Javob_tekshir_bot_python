@@ -59,8 +59,8 @@ async def qul(call: types.CallbackQuery, state: FSMContext):
 
 @dp.callback_query_handler(text="info", state="avto_qul_oddiy")
 async def info(call: types.CallbackQuery, state: FSMContext):
-    await call.message.delete()
     await call.answer("Batafsil ma`lumot👇")
+    await call.message.delete()
     await call.message.answer(text="<b>*Manual - tuzgan testingizni tugma bosish orqali yakunlaysiz.\nTest tuzilganidan boshlab faol ya'ni foydalanuvchilar javob berishi mumkin bo`ladi.</b>\n" +
                               "<b>*Avto - tuzgan testingiz siz ko`rsatgan vaqtda avtomatik ravishda boshlanib, yakunlanish vaqti yetganda avtomatik yakunlanadi.\nTest tuzilganidan boshlab faol bo`lmaydi ya`ni boshlanish vaqti yetmaguncha hech kim javob bera olmaydi.\n</b><b><i>*Test ishtirokchilariga avvaldan test kodi va test haqida ma`lumotlar berish uchun qulay✅\nTest siz ko`rsatgan muddatda bo`lib o`tadi😎</i></b>\n<i>(Testni muddatidan avval ham yakunlashingiz mumkin!)</i>", reply_markup=avto_qul2)
 
@@ -69,6 +69,6 @@ async def info(call: types.CallbackQuery, state: FSMContext):
 async def ortga(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
     await call.message.answer(
-        text="Qanday test tuzmoqchisiz?", reply_markup=test_turi.tur
+        text="<b>Qanday test tuzmoqchisiz ?</b>", reply_markup=test_turi.tur
     )
     await state.set_state("test_turi")

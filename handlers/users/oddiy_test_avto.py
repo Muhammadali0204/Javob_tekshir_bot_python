@@ -189,7 +189,7 @@ async def minut(call: CallbackQuery, state: FSMContext):
             vaqt = ",".join(vaqt)
             try:
                 db_ts.add_test_oddiy(
-                    call.from_user.id, test_kodi, temp_data[call.from_user.id][0], temp_data[call.from_user.id][1], vaqt, 0, None)
+                    call.from_user.id, test_kodi, temp_data[call.from_user.id][0], temp_data[call.from_user.id][1], vaqt, 0, 0)
             except Exception as e:
                 for admin in ADMINS:
                     await bot.send_message(int(admin), f"<b>Test bazaga qo`shishda xatolik yuz berdi(Test kodi : {test_kodi}) : \n{e}</b>")

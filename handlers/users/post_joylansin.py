@@ -7,7 +7,7 @@ from loader import dp, db_ts
 async def yes(call: types.CallbackQuery):
     data = call.data.split(':')
     try:
-        db_ts.update_test_post(data[1], data[2])
+        db_ts.update_test_post(data[1], data[2], 1)
         await call.answer(text=f"{data[2]} - kodli test natijasi kanalingizga avtomatik ravishda joylanadi ✅", show_alert=True)
         await call.message.answer(text=f"{data[2]} - kodli test natijasi kanalingizga avtomatik ravishda joylanadi ✅")
         await call.message.delete()

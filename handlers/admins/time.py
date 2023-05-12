@@ -17,8 +17,7 @@ async def buyruq(msg : types.Message):
     sana = t.strftime("%d.%m.%Y")
     sek = t.strftime("%S")
     
-    for admin in ADMINS:
-        await bot.send_message(admin, f"{soat_minut}:{sek} {sana}")
+    await bot.send_message(ADMINS[1], f"{soat_minut}:{sek} {sana}")
         
         # Limitlarni yangilash
     if soat_minut == '00:00':
@@ -56,7 +55,7 @@ async def buyruq(msg : types.Message):
         vaqt1 = f"{vaqt[0]}:{vaqt[1]}"
         vaqt2 = f"{vaqt[2]}:{vaqt[3]}"
         
-        if vaqt1 == soat_minut:
+        if vaqt1 == soat_minut and oddiy_test[5] == 0:
             try:
                 db_ts.update_test_faollik("Oddiy_test", oddiy_test[1])
                 await bot.send_message(oddiy_test[0], f"<b>Siz tuzgan <i>{oddiy_test[1]}</i> - test faollashdi.</b>\n\n<i>Test {vaqt2} da yakunlanadi</i>")
@@ -144,7 +143,7 @@ async def buyruq(msg : types.Message):
         vaqt1 = f"{vaqt[0]}:{vaqt[1]}"
         vaqt2 = f"{vaqt[2]}:{vaqt[3]}"
         
-        if vaqt1 == soat_minut:
+        if vaqt1 == soat_minut and data_test_blok[6] == 0:
             db_ts.update_test_faollik("Blok_test", data_test_blok[1])
             try:
                 await bot.send_message(data_test_blok[0], f"<b>Siz tuzgan <i>{data_test_blok[1]}</i> - test faollashdi.</b>\n\n<i>Test {vaqt2} da yakunlanadi</i>")
@@ -387,8 +386,8 @@ async def buyruq(msg : types.Message):
                 except :
                     pass
             else:
+                db_ts.delete_answers_blok_by_test_kodi(test_kodi)
                 try:
-                    db_ts.delete_answers_blok_by_test_kodi(test_kodi)
                     await bot.send_message(oddiy_test[0],f"<b>{test_kodi} - kodli test yakunlandi</b>✅\n\n<i>Hech kim javob bermagan</i>")
                     await asyncio.sleep(0.05)
                 except :

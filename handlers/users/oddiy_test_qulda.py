@@ -56,7 +56,7 @@ async def javob_ol(call: types.CallbackQuery, state: FSMContext):
     sana = t.strftime("%d.%m.%Y")
     try:
         db_ts.add_test_oddiy(call.from_user.id, test_kodi,
-                             temp_data[call.from_user.id][0], temp_data[call.from_user.id][1], sana, 1, None)
+                             temp_data[call.from_user.id][0], temp_data[call.from_user.id][1], sana, 1, 0)
     except Exception as e:
         for admin in ADMINS:
             await bot.send_message(int(admin), f"Test bazaga qo`shishda xatolik yuz berdi : \n{e}")

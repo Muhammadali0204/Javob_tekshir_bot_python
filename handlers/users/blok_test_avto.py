@@ -125,7 +125,7 @@ async def minut(call: CallbackQuery, state: FSMContext):
             a3 = ",".join(temp_data[call.from_user.id][3])
             try:
                 db_ts.add_test_blok(call.from_user.id,
-                                    test_kodi, a0, a1, a3, vaqt, 0, None)
+                                    test_kodi, a0, a1, a3, vaqt, 0, 0)
             except Exception as e:
                 for admin in ADMINS:
                     await bot.send_message(int(admin), f"Test bazaga qo`shishda xatolik yuz berdi : \n{e}")

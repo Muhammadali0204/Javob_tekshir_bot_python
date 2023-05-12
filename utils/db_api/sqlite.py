@@ -139,8 +139,8 @@ class Database:
         
         return self.execute(sql=sql, parameters=(test_kodi,), fetchone=True)
     
-    def update_test_post(self, test_turi, test_kodi):
-        sql = f" UPDATE {test_turi} SET avto_post = 1 WHERE test_kodi = ?"
+    def update_test_post(self, test_turi, test_kodi, holat):
+        sql = f"UPDATE {test_turi} SET avto_post = {holat} WHERE test_kodi = ?"
         self.execute(sql=sql, parameters=(test_kodi,), commit=True)
         
     def update_test_faollik(self, test_turi, test_kodi):
