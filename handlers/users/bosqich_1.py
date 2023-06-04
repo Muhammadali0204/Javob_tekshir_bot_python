@@ -10,7 +10,7 @@ import asyncio
 from datetime import datetime, timedelta
 
 
-@dp.callback_query_handler(text=["atmen_kanal", "xullas_atem_kanal"], state="kanal_qushish")
+@dp.callback_query_handler(text=["atmen_kanal", "xullas_atem_kanal"], state=["kanal_qushish","okanal", "skanal"])
 async def atmen(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
     await call.message.answer("<b>Kanal yoki guruhingizni albatta bog'lang\nBu bot imkoniyatlarini to`liq ko`rsatib beradi✅\nIstalgan payt <i>🛠Sozlamalar/🖇Bog'langan kanal/guruh</i> bo'limida kanal yoki guruhingizni bog'lashingiz mumkin mumkin!</b>", reply_markup=menu.menu)
@@ -58,13 +58,16 @@ async def qush(call: types.CallbackQuery, state: FSMContext):
 
 @dp.callback_query_handler(text="tayyor_guruh", state="s_guruh_start")
 async def guruh_tayyor(call: types.CallbackQuery, state: FSMContext):
+    temp_data[call.from_user.id] = None
     await call.message.delete()
-    await state.finish()
-    await call.message.answer("<b><i>Menu : </i></b>", reply_markup=menu.menu)
+    await state.set_state("sozlamalar")
+    await call.message.answer("<b>Guruh bog'langanini 🛠Sozlamalar/🖇Bog'langan kanal/guruh bo'limidan tekshirib oling ❗️\n\nBog'lanmagan bo'lsa qayta urining</b>")
+    await call.message.answer("<b><i>🛠Sozlamalar</i></b>", reply_markup=sozlama_keyboard)
 
 
 @dp.callback_query_handler(text="boglanmadi", state="s_guruh_start")
 async def boglanmagan(call: types. CallbackQuery, state: FSMContext):
+    temp_data[call.from_user.id] = None
     await call.message.delete()
     await state.set_state("sozlamalar")
     await call.message.answer("<b>Qayta urinib ko'ring : </b>", reply_markup=sozlama_keyboard)
