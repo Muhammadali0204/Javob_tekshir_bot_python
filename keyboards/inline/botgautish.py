@@ -58,7 +58,7 @@ kanal_guruh = InlineKeyboardMarkup(
 kanalga_qush = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text="➕Kanalga qo'shish", url="https://t.me/sinov1_bot_bot?startchannel")
+            InlineKeyboardButton(text="➕Kanalga qo'shish", url="https://t.me/javob_tekshir_bot?startchannel")
         ],
         [
             InlineKeyboardButton(text="Tayyor✅", callback_data="tayyor")
@@ -73,7 +73,7 @@ def guruhga_start(id):
     guruhga_start123 = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(text="Guruhni tanlash", url=f"https://t.me/sinov1_bot_bot?startgroup={id}")
+                InlineKeyboardButton(text="Guruhni tanlash", url=f"https://t.me/javob_tekshir_bot?startgroup={id}")
             ],
             [
                 InlineKeyboardButton(text="Tayyor✅", callback_data="tayyor_guruh")
