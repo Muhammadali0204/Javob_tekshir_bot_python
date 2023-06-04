@@ -17,7 +17,7 @@ async def bot_start(message: types.Message, state: FSMContext):
             foydalanuvchi_limitlari_oddiy[message.from_user.id] = [
                 Limitlar_oddiy[0], Limitlar_oddiy[1]]
             foydalanuvchi_limitlari_blok[message.from_user.id] = [
-                Limitlar_oddiy[0], Limitlar_oddiy[1]]
+                Limitlar_blok[0], Limitlar_blok[1]]
             await state.set_state("ism")
             await message.answer(f"👋<b>Salom, <i>{message.from_user.get_mention(message.from_user.full_name)}</i>\nXush kelibsiz❗️</b>")
             await message.answer("✍️<i>Ism familiyangizni kiriting : </i>\n")
