@@ -102,3 +102,93 @@ async def kkncsknskd(call : types.CallbackQuery, state  :FSMContext):
     await call.message.delete()
     await call.message.answer("<b><i>Menu : </i></b>", reply_markup=menu.menu)
     await state.finish()
+    
+
+@dp.callback_query_handler(regexp = "boshlash:+", state = "oddiy_testni_tahrirlash")
+async def djcnk(call : types.CallbackQuery, state : FSMContext):
+    test_kodi = call.data.split(":")[1]
+    db_ts.update_test_faollik("Oddiy_test", test_kodi)
+    await call.answer(f"{test_kodi} - kodli test faollashdi ✅", show_alert=True)
+    await call.message.delete()
+    await call.message.answer(f"<b>{test_kodi} - kodli test faollashdi ✅</b>", reply_markup=menu.menu)
+    await state.finish()
+
+
+@dp.callback_query_handler(regexp = "tugatish:+", state = "oddiy_testni_tahrirlash")
+async def djcnk(call : types.CallbackQuery, state : FSMContext):
+    test_kodi = call.data.split(":")[1]
+    javob_berganlar_malumoti = db_bj.select_all_javob_berganlar_tartiblangan_oddiy_by_testkodi(test_kodi)
+    javob_berganlar = []  # [(1, 2, 3), (4, 5, 6, ) ... ]
+    data_test_oddiy = db_ts.select_test_oddiy_by_test_kodi(test_kodi)
+    for user in javob_berganlar_malumoti:
+        javob_berganlar.append(
+            [db_users.select_user_id(user[0]), user])
+        
+    if javob_berganlar == []:
+        await call.message.delete()
+        answer = f"<b>Test yakunlandi✅</b>\n\n🔑<b>Test kodi : </b><i>{test_kodi}</i>\n🗂<b>Test turi : </b><i>Oddiy</i>\n{kitoblar[random.randint(0, 4)]}<b>Fan nomi : </b><i>{data_test_oddiy[2]}</i>\n<b>🔢Savollar soni : </b> <i>{len(data_test_oddiy[3])} ta</i>\n\n<i>Hech kim javob bermagan ☹️</i>\n\n"
+        await call.message.answer(answer, reply_markup=menu.menu)
+        # Testlarni o`chirish-----------------
+        db_bj.delete_answers_oddiy_by_test_kodi(test_kodi)
+        db_ts.delete_answers_oddiy_by_test_kodi(test_kodi)
+        await state.finish()
+        
+    else :
+        await state.finish()
+        # Test egasiga ------------------------------
+        ragbat = '🥇'
+        bal = javob_berganlar[0][1][2]
+        answer = f"<b>Test yakunlandi✅</b>\n\n🔑<b>Test kodi : </b><i>{test_kodi}</i>\n🗂<b>Test turi : </b><i>Oddiy</i>\n{kitoblar[random.randint(0, 4)]}<b>Fan nomi : </b><i>{data_test_oddiy[2]}</i>\n<b>🔢Savollar soni : </b> <i>{len(data_test_oddiy[3])} ta</i>\n\n<b>📊Natijalar : </b>\n\n"
+        for i in range(0, len(javob_berganlar)):
+            if bal > javob_berganlar[i][1][2]:
+                if ragbat == '🥇':
+                    ragbat = '🥈'
+                elif ragbat == '🥈':
+                    ragbat = '🥉'
+                elif ragbat == '🥉':
+                    ragbat = ''
+                bal = javob_berganlar[i][1][2]
+            answer += f"<b>{i+1}. <i>{javob_berganlar[i][0][1]}</i></b> <i>{javob_berganlar[i][1][2]} ta</i>{ragbat}\n"
+
+        answer += "\n\n<b>✅To`g`ri javoblar : </b>\n\n"
+        soni = 0
+        if len(data_test_oddiy[3]) < 6:
+            soni = 3
+        elif len(data_test_oddiy[3]) < 16:
+            soni = 4
+        else:
+            soni = 5
+        for j in range(0, len(data_test_oddiy[3])):
+            if (j+1) % soni == 0:
+                answer += f"<b>{j+1} - <i>{data_test_oddiy[3][j]}</i></b>\n"
+            else:
+                answer += f"<b>{j+1} - <i>{data_test_oddiy[3][j]}</i></b>  "
+
+        answer += "\n\n<b>Testda qatnashgan barchaga rahmat 😊</b>"
+
+        await call.answer(f"{test_kodi} - kodli test yakunlandi✅", show_alert=True)
+        await call.message.delete()
+        await call.message.answer(answer)
+
+        # Testlarni o`chirish-----------------
+        db_bj.delete_answers_oddiy_by_test_kodi(test_kodi)
+        db_ts.delete_answers_oddiy_by_test_kodi(test_kodi)
+
+        if data_test_oddiy[6] == '1':
+            kanal = db_users.select_user_id(call.from_user.id)[4]
+            if kanal == None:
+                try:
+                    await call.message.answer(f"<b>Post joylash bo'yicha xatolik!\n\n</b><i>Kanal yoki guruh bog'lanmagan ❌</i>")
+                except:
+                    pass
+            else:
+                kanal = kanal.split(",")
+                try:
+                    await bot.send_message(kanal[0], text=answer)
+                    await call.message.answer(f"<b><code>{kanal[1]}</code> kanal/guruhiga natijalar yuborildi.</b>")
+                except Exception as e:
+                    await call.message.answer(f"<b>Kanalga post joylash bo'yicha xatolik!</b>\n{e}")
+                    await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
+                    
+        
+

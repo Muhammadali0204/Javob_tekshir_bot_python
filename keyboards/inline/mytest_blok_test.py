@@ -15,7 +15,7 @@ def test_list2(test):
             nomm.insert(InlineKeyboardButton(text="🟢Kanal/guruhga joylashni yoqish", callback_data=f"kanal_guruh_joylash_yoqish:{test[1]}"))
         elif test[7] == '1' and user[4] != None:
             nomm.insert(InlineKeyboardButton(text="🔴Kanal/guruhga joylashni o'chirish", callback_data=f"kanal_guruh_joylash_ochirish:{test[1]}"))
-            
+        nomm.insert(InlineKeyboardButton(text="🔴Testni yakunlash", callback_data=f"tugatish:{test[1]}"))
     else :
         nomm.insert(InlineKeyboardButton(text="🔢Javob berganlar soni", callback_data=f"javob_berganlar_soni:{test[1]}"))
         nomm.insert(InlineKeyboardButton(text="♻️Fan nomini tahrirlash", callback_data=f"fan_nomini_tahrirlash:{test[1]}"))
@@ -25,13 +25,10 @@ def test_list2(test):
             nomm.insert(InlineKeyboardButton(text="🔴Kanal/guruhga joylashni o'chirish", callback_data=f"kanal_guruh_joylash_ochirish:{test[1]}"))
         
         if test[6] == 0:
-            nomm.insert(InlineKeyboardButton(text="♻️Javoblarni tahrirlash", callback_data=f"javoblarni_tahrirlash:{test[1]}"))
-            nomm.insert(InlineKeyboardButton(text="♻️Boshlanish vaqtini o'zgartirish", callback_data=f"boshlanish_vaqti:{test[1]}"))
-            nomm.insert(InlineKeyboardButton(text="♻️Yakunlanish vaqtini o'zgartirish", callback_data=f"yakunlanish_vaqti:{test[1]}"))
             nomm.insert(InlineKeyboardButton(text="🟢Muddatdan oldin boshlash", callback_data=f"boshlash:{test[1]}"))
+            nomm.insert(InlineKeyboardButton(text="🔴Testni o'chirish", callback_data=f"tugatish:{test[1]}"))
         elif test[6] == 1:
-            nomm.insert(InlineKeyboardButton(text="♻️Yakunlanish vaqtini o'zgartirish", callback_data=f"yakunlanish_vaqti:{test[1]}"))
-            nomm.insert(InlineKeyboardButton(text="🟢Muddatdan oldin yakunlash", callback_data=f"javob_berganlar_soni:{test[1]}"))
+            nomm.insert(InlineKeyboardButton(text="🔴Muddatdan oldin yakunlash", callback_data=f"tugatish:{test[1]}"))
             
     
     

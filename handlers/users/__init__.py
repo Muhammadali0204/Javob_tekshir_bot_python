@@ -1,12 +1,12 @@
-from . import commands
-from . import start
 from . import yuqoridagi_tugma
+from . import statistika
+from . import start
 from . import bekor_qil
 # from . import photo
 from . import ortga_menu
 from . import ism_tahrirlash
 from . import aboutme
-from . import boglangan_kanal
+from . import boglangan_kanal1
 from . import limitlarni_oshirish
 from . import bosqich_1
 from . import kanalga_botni_qoshish

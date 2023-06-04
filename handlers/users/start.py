@@ -43,7 +43,7 @@ async def ism(msg: types.Message, state: FSMContext):
 
 
 # Chalaaa
-@dp.message_handler(CommandStart(), filters.ChatTypeFilter(types.ChatType.SUPERGROUP))
+@dp.message_handler(CommandStart(), filters.ChatTypeFilter([types.ChatType.GROUP, types.ChatType.SUPERGROUP]))
 async def bot_start(msg: types.Message):
     try:
         if temp_data[int(msg.text.split(' ')[1])] == 'start_bosadi':
@@ -63,6 +63,8 @@ async def bot_start(msg: types.Message):
                                 f"{chat_id},{chat_name}", msg.from_user.id)
                         await msg.reply(f"<b>@Javob_tekshir_bot <u>{name_user}</u> tomonidan <u>{chat_name}</u> guruhiga bog'landi</b>")
                         return
+                await msg.reply("<b>Siz bu guruhda adminstrator emasssiz ❌</b>")
+                return
             except Exception as e:
                 print(e)
         await msg.reply("<b>Bu bot faqat shaxsiy chatda ishlaydi❗️</b>")

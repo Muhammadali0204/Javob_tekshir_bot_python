@@ -27,7 +27,7 @@ async def buyruq(msg : types.Message):
             if user[3] == sana:
                 db_users.update_status_user('-1', user[0])
                 try :
-                    await bot.send_message(user[0], "<b>Premium obunangiz muddati tugadi</b>")
+                    await bot.send_message(user[0], "<b>Premium obunangiz muddati tugadi</b>\n\n<i>Qayta faollashtirish uchun \n\n🛠Sozlamalar/⬆️Limitlarni oshirish \n\nbo'limiga o'ting</i>")
                 except :
                     pass
             

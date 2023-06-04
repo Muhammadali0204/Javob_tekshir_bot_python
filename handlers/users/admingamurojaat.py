@@ -8,4 +8,3 @@ from loader import dp, db_users, bot
 async def adminga(msg: types.Message, state: FSMContext):
     answer = "<b>❔Savollaringiz yoki 📨 takliflaringiz bo`lsa, quyidagi botga xabar yuboring 📤</b>\n<i>*Tez orada javob beriladi</i>"
     await msg.answer(text=answer, reply_markup=botga)
-    await bot.pin_chat_message(msg.from_user.id, (msg.message_id + 1))

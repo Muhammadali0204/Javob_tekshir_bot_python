@@ -51,6 +51,7 @@ class Database:
         SELECT * FROM Users WHERE user_id > 100
         """
         return self.execute(sql, fetchall=True)
+    
 
     def select_user(self, **kwargs):
         # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"

@@ -31,11 +31,11 @@ async def kanal(msg: types.Message, state: FSMContext):
         await msg.answer("<b>Botni kanalingizga qo'shmagansiz ❌</b>\n\n<i>Qayta urinib ko'ring</i>", reply_markup=menu)
         await state.finish()
         return
-    await msg.answer("<b>Siz bu kanalning admini emassiz ❌</b>", reply_markup=menu)
+    await msg.answer("<b>Siz bu kanalda adminstrator emassiz ❌</b>", reply_markup=menu)
     await state.finish()
 
 
-@dp.message_handler(state="s_kanal_posti", content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.TEXT])
+@dp.message_handler(state="s_kanal_posti", content_types=types.ContentType.ANY)
 async def kanal(msg: types.Message, state: FSMContext):
     try:
         if msg.forward_from_chat:
@@ -59,5 +59,5 @@ async def kanal(msg: types.Message, state: FSMContext):
         await msg.answer("<b>Botni kanalingizga qo'shmagansiz ❌ yoki </b>\n\n<i>Qayta urinib ko'ring</i>", reply_markup=menu)
         await state.finish()
         return
-    await msg.answer("<b>Siz bu kanalning admini emassiz ❌</b>", reply_markup=menu)
+    await msg.answer("<b>Siz bu kanalda adminstrator emassiz ❌</b>", reply_markup=menu)
     await state.finish()

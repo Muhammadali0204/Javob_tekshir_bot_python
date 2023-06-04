@@ -49,4 +49,4 @@ async def reset_channel_group(call: types.CallbackQuery, state: FSMContext):
 async def reset_channel_group(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
     db_users.update_kanal_user(None, call.from_user.id)
-    await call.message.answer("<b>O'chirildi</b>\n<i></i>")
+    await call.message.answer("<b>O'chirildi ✅</b>\n<i></i>")

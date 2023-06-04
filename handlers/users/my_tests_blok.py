@@ -50,6 +50,7 @@ async def qatnashganlar_soni(call: types.CallbackQuery, state: FSMContext):
 @dp.callback_query_handler(state="blok_testni_tahrirlash", regexp="fan_nomini_tahrirlash:+")
 async def qatnashganlar_soni(call: types.CallbackQuery, state: FSMContext):
     test_kodi = call.data.split(':')[1]
+    temp_data['blok_testning_fan_nomini_tahrirlash'] = test_kodi
     test_blok = db_ts.select_test_blok_by_test_kodi(test_kodi)
     fanlar = test_blok[2].split(',')
     await call.message.answer("<b>Tahrirlamoqchi bo'lgan faningizni tanlang 👇</b>", reply_markup=blok_test_fan_tah.blok_test_fanlar(fanlar, test_kodi))
@@ -57,10 +58,10 @@ async def qatnashganlar_soni(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
 
 
-@dp.callback_query_handler(state="blok_test_fan_tahrirlash", text="ortga")
+@dp.callback_query_handler(state="blok_test_fan_tahrirlash", regexp="ortga:+")
 async def qatnashganlar_soni(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
-    test_kodi = call.data.split(':')[0]
+    test_kodi = call.data.split(':')[1]
     test = db_ts.select_test_blok_by_test_kodi(test_kodi)
     answer = f"🔑<b>Test kodi : </b><i>{test[1]}</i>\n🗂<b>Test turi : </b><i>Blok</i>\n"
     fan_nomlari = test[2].split(',')
@@ -87,6 +88,17 @@ async def qatnashganlar_soni(call: types.CallbackQuery, state: FSMContext):
     await call.message.answer(answer, reply_markup=ortga.ortga)
     await state.set_state("blok_test_fan_tahrirlash1")
 
+@dp.message_handler(state="blok_test_fan_tahrirlash1", text="◀️Ortga")
+async def sddfb(msg: types.Message, state: FSMContext):
+    try :
+        test_kodi = temp_data["blok_testning_fan_nomini_tahrirlash"]
+    except :
+        await msg.answer("<b><i>Menu : </i></b>", reply_markup=menu.menu)
+        await state.finish()
+    test_blok = db_ts.select_test_blok_by_test_kodi(test_kodi)
+    fanlar = test_blok[2].split(',')
+    await msg.answer("<b>Tahrirlamoqchi bo'lgan faningizni tanlang 👇</b>", reply_markup=blok_test_fan_tah.blok_test_fanlar(fanlar, test_kodi))
+    await state.set_state("blok_test_fan_tahrirlash")
 
 @dp.message_handler(state="blok_test_fan_tahrirlash1")
 async def tahrirlash(msg: types.Message, state: FSMContext):
@@ -133,3 +145,110 @@ async def kkncsknskd(call : types.CallbackQuery, state  :FSMContext):
     await call.message.delete()
     await call.message.answer("<b><i>Menu : </i></b>", reply_markup=menu.menu)
     await state.finish()
+
+
+@dp.callback_query_handler(regexp = "boshlash:+", state = "blok_testni_tahrirlash")
+async def djcnk(call : types.CallbackQuery, state : FSMContext):
+    test_kodi = call.data.split(":")[1]
+    db_ts.update_test_faollik("Blok_test", test_kodi)
+    await call.answer(f"{test_kodi} - kodli test faollashdi ✅", show_alert=True)
+    await call.message.delete()
+    await call.message.answer(f"<b>{test_kodi} - kodli test faollashdi ✅</b>", reply_markup=menu.menu)
+    await state.finish()
+
+
+@dp.callback_query_handler(regexp = "tugatish:+", state = "blok_testni_tahrirlash")
+async def djcnk(call : types.CallbackQuery, state : FSMContext):
+    test_kodi = call.data.split(":")[1]
+    javob_berganlar_malumoti = db_bj.select_all_javob_berganlar_tartiblangan_blok_by_testkodi(
+                test_kodi)
+    javob_berganlar = []  # [(1, 2, 3), (4, 5, 6, ) ... ]
+    data_test_blok = db_ts.select_test_blok_by_test_kodi(test_kodi)
+    for user in javob_berganlar_malumoti:
+        javob_berganlar.append(
+            [db_users.select_user_id(user[0]), user])
+
+    fan_nomlari = data_test_blok[2].split(',')
+    javoblar = data_test_blok[3].split(',')
+    beriladigan_ballar = data_test_blok[4].split(',')
+
+    db_bj.delete_answers_blok_by_test_kodi(test_kodi)
+    db_ts.delete_answers_blok_by_test_kodi(test_kodi)
+    
+    if javob_berganlar == []:
+        await call.message.delete()
+        answer = f"<b>Test yakunlandi ✅</b>\n\n🔑<b>Test kodi : </b><i>{test_kodi}</i>\n🗂<b>Test turi : </b><i>Blok test</i>\n🟢<b>Fanlar soni : </b><i>{len(fan_nomlari)} ta\n\nHech kimjavob bermagan ☹️</i>"
+        await call.message.answer(answer, reply_markup=menu.menu)
+        await state.finish()
+        
+    else:
+        await state.finish()
+        # Test egasiga ------------------------------
+        answer = f"<b>Test yakunlandi ✅</b>\n\n🔑<b>Test kodi : </b><i>{test_kodi}</i>\n🗂<b>Test turi : </b><i>Blok test</i>\n🟢<b>Fanlar soni : </b><i>{len(fan_nomlari)} ta</i>\n\n"
+        umumiy_ball = 0
+        q = [1, len(javoblar[0])]
+        for i in range(0, len(fan_nomlari)):
+            if i != 0:
+                q[0] += len(javoblar[i-1])
+                q[1] += len(javoblar[i])
+            answer += f"<b>{i+1} - fan : </b>\n"
+            answer += f"<b>{kitoblar[i]}Fan nomi : </b><i>{fan_nomlari[i]}</i>\n"
+            answer += f"<b>🔢Savollar soni : <i>{len(javoblar[i])} ta</i></b><i> ({q[0]}-{q[1]})</i>\n"
+            answer += f"<b>❕Ball : </b><i>{beriladigan_ballar[i]}</i>\n"
+            umumiy_ball += len(javoblar[i]) * float(beriladigan_ballar[i])
+            answer += f"<i>Fan uchun beriladigan ball : {round(len(javoblar[i]) * float(beriladigan_ballar[i]), 4)}</i>\n\n"
+        answer += f"<b>Jami savollar soni : </b><i>{q[1]} ta</i>\n"
+        answer += f"<b>Umumiy ball : </b><i>{round(umumiy_ball, 4)}</i>\n\n<b>📊Natijalar : </b>\n\n"
+        ragbat = '🥇'
+        bal = javob_berganlar[0][1][4]
+        for i in range(0, len(javob_berganlar)):
+            if bal > javob_berganlar[i][1][4]:
+                if ragbat == '🥇':
+                    ragbat = '🥈'
+                elif ragbat == '🥈':
+                    ragbat = '🥉'
+                elif ragbat == '🥉':
+                    ragbat = ''
+                bal = javob_berganlar[i][1][4]
+            answer += f"<b>{i+1}. <i>{javob_berganlar[i][0][1]}</i></b> <i>{round(float(javob_berganlar[i][1][4]), 4)} ball</i>{ragbat}\n"
+
+        answer += "\n<b>✅To`g`ri javoblar : </b>\n\n"
+        for i in range(0, len(fan_nomlari)):
+            answer += f"<b>{i+1} - fan : {kitoblar[random.randint(0, 4)]}<i>{fan_nomlari[i]}</i></b>\n"
+            soni = 0
+            if len(javoblar[i]) < 6:
+                soni = 3
+            elif len(javoblar[i]) < 16:
+                soni = 4
+            else:
+                soni = 5
+
+            for j in range(0, len(javoblar[i])):
+                if (j+1) % soni == 0:
+                    answer += f"<b>{j+1} - <i>{javoblar[i][j]}</i></b>\n"
+                else:
+                    answer += f"<b>{j+1} - <i>{javoblar[i][j]}</i></b>  "
+
+            answer += "\n\n"
+
+        answer += "\n<b>Testda qatnashgan barchaga rahmat 😊</b>"
+
+        await call.answer(f"{test_kodi} - kodli test yakunlandi✅", show_alert=True)
+        await call.message.delete()
+        await call.message.answer(answer)
+
+        if data_test_blok[7] == '1':
+            kanal = db_users.select_user_id(call.from_user.id)[4]
+            if kanal == None:
+                try:
+                    await call.message.answer(f"<b>Kanalga post joylash bo'yicha xatolik!\n\n</b><i>Kanal yoki guruh bog'lanmagan ❌</i>")
+                except:
+                    pass
+            else:
+                kanal = kanal.split(",")
+                try:
+                    await bot.send_message(kanal[0], text=answer)
+                    await call.message.answer(f"<b><code>{kanal[1]}</code> kanal/guruhiga natijalar yuborildi.</b>")
+                except Exception as e:
+                    await call.message.answer(f"<b>Kanalga post joylash bo'yicha xatolik!</b>\n{e}")
+                    await call.message.answer("<i>Adminga murojaat qiling va yuqoridagi xabarni yuboring!</i>")
