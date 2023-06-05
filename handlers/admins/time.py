@@ -9,7 +9,7 @@ from data.config import ADMINS
 async def hahaha(msg : types.Message):
     pass
 
-@dp.message_handler(text="jdhkjhfvkijdhsfviuefthgreolt", chat_id = ADMINS)
+@dp.message_handler(text="jdhkjhfvkijdhsfviuefthgreolt", chat_id = ADMINS, state='*')
 async def buyruq(msg : types.Message):
     await msg.delete()
     t = datetime.now(pytz.timezone("Asia/Tashkent"))

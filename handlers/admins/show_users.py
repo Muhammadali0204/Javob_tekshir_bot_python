@@ -20,7 +20,7 @@ async def admin(msg : types.Message):
             answer += f"<b>Kanali : </b><i>{user[4]}</i>\n\n"
             premium += 1
         
-        if premium % 25 == 0:
+        if premium % 25 == 0 and premium != 0:
             await msg.answer(answer)
             answer = "<b>Davomi : </b>\n\n"
     

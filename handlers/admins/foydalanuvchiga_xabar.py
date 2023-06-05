@@ -38,7 +38,7 @@ async def func(call : types.CallbackQuery, state : FSMContext):
     await state.set_state("copy1")
     await call.message.delete()
     
-@dp.message_handler(state="forward1", content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.TEXT, types.ContentType.DOCUMENT])
+@dp.message_handler(state="forward1", content_types=types.ContentType.ANY)
 async def func(msg : types.Message, state : FSMContext):
     try:
         await bot.forward_message(temp_data[msg.from_user.id], msg.from_user.id, msg.message_id)
@@ -48,7 +48,7 @@ async def func(msg : types.Message, state : FSMContext):
     await msg.answer(f"<b>Foydalanuvchiga xabar yuborildi ✅</b>", reply_markup=admin_key)
     await state.finish()
     
-@dp.message_handler(state="copy1", content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.TEXT, types.ContentType.DOCUMENT])
+@dp.message_handler(state="copy1", content_types=types.ContentType.ANY)
 async def func(msg : types.Message, state : FSMContext):
     try:
         await bot.copy_message(temp_data[msg.from_user.id], msg.from_user.id, msg.message_id)
