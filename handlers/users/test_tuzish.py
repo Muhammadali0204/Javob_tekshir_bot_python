@@ -12,7 +12,7 @@ from keyboards.inline.channels import channels_keyboard
 
 @dp.message_handler(filters.ChatTypeFilter(types.ChatType.PRIVATE), text="🖌Test tuzish")
 async def tuz(msg: types.Message, state: FSMContext):
-    if kanallar[0] != '':
+    if kanallar[0] != "":
         azo_bulmagan_kanallar = []
         id = msg.from_user.id
         final_status = True
@@ -26,10 +26,17 @@ async def tuz(msg: types.Message, state: FSMContext):
                     azo_bulmagan_kanallar.append(invite_link)
             except Exception as e:
                 for admin in ADMINS:
-                    await bot.send_message(int(admin), f"A`zo bo`linishi kerak bo`lgan kanal bo`yicha nosozlik\n{e}")
+                    await bot.send_message(
+                        int(admin),
+                        f"A`zo bo`linishi kerak bo`lgan kanal bo`yicha nosozlik\n{e}",
+                    )
         if not final_status:
             answer = "<b>Test tuza olish uchun quyidagi kanallarga obuna bo`ling❗️</b>"
-            await msg.answer(answer, disable_web_page_preview=True, reply_markup=channels_keyboard(azo_bulmagan_kanallar, "test_tuz"))
+            await msg.answer(
+                answer,
+                disable_web_page_preview=True,
+                reply_markup=channels_keyboard(azo_bulmagan_kanallar, "test_tuz"),
+            )
         else:
             await msg.answer(
                 text="<b>Yaxshi, qanday test tuzmoqchisiz?</b>", reply_markup=info

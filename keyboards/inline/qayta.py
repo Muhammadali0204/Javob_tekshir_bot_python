@@ -6,7 +6,9 @@ qayta = InlineKeyboardMarkup(
             InlineKeyboardButton(text="🔵Qayta", callback_data="qayta_vaqt_kiritish"),
         ],
         [
-            InlineKeyboardButton(text="🔴Test tuzishni bekor qilish", callback_data="test_atmen")
-        ]
+            InlineKeyboardButton(
+                text="🔴Test tuzishni bekor qilish", callback_data="test_atmen"
+            )
+        ],
     ]
 )

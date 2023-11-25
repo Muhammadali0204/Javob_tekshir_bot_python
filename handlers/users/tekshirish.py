@@ -7,7 +7,9 @@ from keyboards.inline import info
 from aiogram import types, filters
 
 
-@dp.callback_query_handler(filters.ChatTypeFilter(types.ChatType.PRIVATE), regexp="obunani_tekshir:+")
+@dp.callback_query_handler(
+    filters.ChatTypeFilter(types.ChatType.PRIVATE), regexp="obunani_tekshir:+"
+)
 async def salom(call: types.CallbackQuery, state: FSMContext):
     azo_bulmagan_kanallar = []
     id = call.from_user.id
@@ -22,13 +24,19 @@ async def salom(call: types.CallbackQuery, state: FSMContext):
                 azo_bulmagan_kanallar.append(invite_link)
         except Exception as e:
             for admin in ADMINS:
-                await bot.send_message(int(admin), f"A`zo bo`linishi kerak bo`lgan kanal bo`yicha nosozlik\n{e}")
+                await bot.send_message(
+                    int(admin),
+                    f"A`zo bo`linishi kerak bo`lgan kanal bo`yicha nosozlik\n{e}",
+                )
     if final_status:
-        holat = call.data.split(':')[1]
+        holat = call.data.split(":")[1]
         await call.answer("Botdan to`liq foydalanishingiz mumkin✅", show_alert=True)
         await call.message.delete()
         if holat == "javob_ber":
-            await call.message.answer("<b>Yaxshi, test kodini yuboring : </b>", reply_markup=bekor_qilish.bekor_qil)
+            await call.message.answer(
+                "<b>Yaxshi, test kodini yuboring : </b>",
+                reply_markup=bekor_qilish.bekor_qil,
+            )
             await state.set_state("test_kodi")
         elif holat == "test_tuz":
             await call.message.answer(
@@ -40,6 +48,10 @@ async def salom(call: types.CallbackQuery, state: FSMContext):
         await call.answer("Siz barcha kanallarga a`zo bo`lmadingiz ❗️", show_alert=True)
 
 
-@dp.callback_query_handler(filters.ChatTypeFilter(types.ChatType.PRIVATE), regexp="obunani_tekshir:+", state='*')
+@dp.callback_query_handler(
+    filters.ChatTypeFilter(types.ChatType.PRIVATE),
+    regexp="obunani_tekshir:+",
+    state="*",
+)
 async def salom(call: types.CallbackQuery):
     await call.message.delete()

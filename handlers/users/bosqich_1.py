@@ -4,16 +4,30 @@ from keyboards.inline.botgautish import kanal_guruh, kanalga_qush, guruhga_start
 from keyboards.default.bekor_qilish import bekor_qil
 from keyboards.default import menu
 from keyboards.default.sozlamalar import sozlama_keyboard
-from loader import dp, db_users, Limitlar_oddiy, Limitlar_blok, premium_narxi, temp_data, bot
+from loader import (
+    dp,
+    db_users,
+    Limitlar_oddiy,
+    Limitlar_blok,
+    premium_narxi,
+    temp_data,
+    bot,
+)
 import pytz
 import asyncio
 from datetime import datetime, timedelta
 
 
-@dp.callback_query_handler(text=["atmen_kanal", "xullas_atem_kanal"], state=["kanal_qushish","okanal", "skanal"])
+@dp.callback_query_handler(
+    text=["atmen_kanal", "xullas_atem_kanal"],
+    state=["kanal_qushish", "okanal", "skanal"],
+)
 async def atmen(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
-    await call.message.answer("<b>Kanal yoki guruhingizni albatta bog'lang\nBu bot imkoniyatlarini to`liq ko`rsatib beradi✅\nIstalgan payt <i>🛠Sozlamalar/🖇Bog'langan kanal/guruh</i> bo'limida kanal yoki guruhingizni bog'lashingiz mumkin mumkin!</b>", reply_markup=menu.menu)
+    await call.message.answer(
+        "<b>Kanal yoki guruhingizni albatta bog'lang\nBu bot imkoniyatlarini to`liq ko`rsatib beradi✅\nIstalgan payt <i>🛠Sozlamalar/🖇Bog'langan kanal/guruh</i> bo'limida kanal yoki guruhingizni bog'lashingiz mumkin mumkin!</b>",
+        reply_markup=menu.menu,
+    )
     await state.finish()
 
 
@@ -28,30 +42,47 @@ async def atmen(msg: types.Message, state: FSMContext):
 @dp.callback_query_handler(state="kanal_qushish", text="kanal_qushish")
 async def qush(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
-    await call.message.answer("<b>Qanday kanal yoki guruh bog'lamoqchisiz❓</b>\n<i>*Iltimos,bu jarayonda e'tiborli bo'ling</i>", reply_markup=kanal_guruh)
+    await call.message.answer(
+        "<b>Qanday kanal yoki guruh bog'lamoqchisiz❓</b>\n<i>*Iltimos,bu jarayonda e'tiborli bo'ling</i>",
+        reply_markup=kanal_guruh,
+    )
 
 
 @dp.callback_query_handler(state="kanal_qushish", text="okanal")
 async def qush(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
-    await call.message.answer("<b>Ommaviy kanal bog'lamoqchisiz</b>", reply_markup=bekor_qil)
-    await call.message.answer(text="<b>Yaxshi, endi botni ommaviy kanalingizga admin sifatida qo'shing.</b>\n<i>Kanalga qo'shish tugmasini bosing va kanalingizga admin sifatida qo`shing.\n\n❗️Bot kanalingizga qo'shilganiga ishonch hosil qilib, </i><code>Tayyor✅</code><i> tugmasini bosing.</i>", reply_markup=kanalga_qush)
+    await call.message.answer(
+        "<b>Ommaviy kanal bog'lamoqchisiz</b>", reply_markup=bekor_qil
+    )
+    await call.message.answer(
+        text="<b>Yaxshi, endi botni ommaviy kanalingizga admin sifatida qo'shing.</b>\n<i>Kanalga qo'shish tugmasini bosing va kanalingizga admin sifatida qo`shing.\n\n❗️Bot kanalingizga qo'shilganiga ishonch hosil qilib, </i><code>Tayyor✅</code><i> tugmasini bosing.</i>",
+        reply_markup=kanalga_qush,
+    )
     await state.set_state("okanal")
 
 
 @dp.callback_query_handler(state="kanal_qushish", text="skanal")
 async def qush(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
-    await call.message.answer("<b>Shaxsiy kanal bog'lamoqchisiz</b>", reply_markup=bekor_qil)
+    await call.message.answer(
+        "<b>Shaxsiy kanal bog'lamoqchisiz</b>", reply_markup=bekor_qil
+    )
     await state.set_state("skanal")
-    await call.message.answer(text="<b>Yaxshi, endi botni shaxsiy kanalingizga admin sifatida qo'shing.</b>\n<i>Kanalga qo'shish tugmasini bosing va kanalingizga admin sifatida qo`shing.\n\n❗️Bot kanalingizga qo'shilganiga ishonch hosil qilib, </i><code>Tayyor✅</code><i> tugmasini bosing.</i>", reply_markup=kanalga_qush)
+    await call.message.answer(
+        text="<b>Yaxshi, endi botni shaxsiy kanalingizga admin sifatida qo'shing.</b>\n<i>Kanalga qo'shish tugmasini bosing va kanalingizga admin sifatida qo`shing.\n\n❗️Bot kanalingizga qo'shilganiga ishonch hosil qilib, </i><code>Tayyor✅</code><i> tugmasini bosing.</i>",
+        reply_markup=kanalga_qush,
+    )
 
 
 @dp.callback_query_handler(state="kanal_qushish", text="oguruh")
 async def qush(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
-    await call.message.answer("<b>Ommaviy guruh bog'lamoqchisiz</b>", reply_markup=bekor_qil)
-    await call.message.answer(text="<b>Guruhni tanlang</b>", reply_markup=guruhga_start(call.from_user.id))
+    await call.message.answer(
+        "<b>Ommaviy guruh bog'lamoqchisiz</b>", reply_markup=bekor_qil
+    )
+    await call.message.answer(
+        text="<b>Guruhni tanlang</b>", reply_markup=guruhga_start(call.from_user.id)
+    )
     await state.set_state("s_guruh_start")
     temp_data[call.from_user.id] = "start_bosadi"
 
@@ -61,13 +92,19 @@ async def guruh_tayyor(call: types.CallbackQuery, state: FSMContext):
     temp_data[call.from_user.id] = None
     await call.message.delete()
     await state.set_state("sozlamalar")
-    await call.message.answer("<b>Guruh bog'langanini 🛠Sozlamalar/🖇Bog'langan kanal/guruh bo'limidan tekshirib oling ❗️\n\nBog'lanmagan bo'lsa qayta urining</b>")
-    await call.message.answer("<b><i>🛠Sozlamalar</i></b>", reply_markup=sozlama_keyboard)
+    await call.message.answer(
+        "<b>Guruh bog'langanini 🛠Sozlamalar/🖇Bog'langan kanal/guruh bo'limidan tekshirib oling ❗️\n\nBog'lanmagan bo'lsa qayta urining</b>"
+    )
+    await call.message.answer(
+        "<b><i>🛠Sozlamalar</i></b>", reply_markup=sozlama_keyboard
+    )
 
 
 @dp.callback_query_handler(text="boglanmadi", state="s_guruh_start")
-async def boglanmagan(call: types. CallbackQuery, state: FSMContext):
+async def boglanmagan(call: types.CallbackQuery, state: FSMContext):
     temp_data[call.from_user.id] = None
     await call.message.delete()
     await state.set_state("sozlamalar")
-    await call.message.answer("<b>Qayta urinib ko'ring : </b>", reply_markup=sozlama_keyboard)
+    await call.message.answer(
+        "<b>Qayta urinib ko'ring : </b>", reply_markup=sozlama_keyboard
+    )

@@ -8,6 +8,7 @@ tur = ReplyKeyboardMarkup(
         ],
         [
             KeyboardButton(text="◀️Ortga"),
-        ]
-    ], resize_keyboard=True
+        ],
+    ],
+    resize_keyboard=True,
 )

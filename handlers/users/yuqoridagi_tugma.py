@@ -4,7 +4,9 @@ from loader import dp, bot
 import asyncio
 
 
-@dp.message_handler(state=["avto_qul_oddiy", "avto_qul_blok"], content_types=types.ContentTypes.ANY)
+@dp.message_handler(
+    state=["avto_qul_oddiy", "avto_qul_blok"], content_types=types.ContentTypes.ANY
+)
 async def iye(msg: Message):
     await msg.delete()
     await msg.answer("<b>Yuqoridagi tugmalardan foydalaning 👆</b>")

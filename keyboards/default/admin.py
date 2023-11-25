@@ -1,9 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
-admin_key = ReplyKeyboardMarkup(
-    row_width=2,resize_keyboard=True
-)
+admin_key = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 admin_key.insert(KeyboardButton(text="Test haqida ma'lumot"))
 admin_key.insert(KeyboardButton(text="Test kodi"))
 admin_key.insert(KeyboardButton(text="Foydalanuvchiga xabar"))

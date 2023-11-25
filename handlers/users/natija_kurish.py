@@ -4,11 +4,12 @@ import pytz
 from loader import dp, db_bj, db_users
 
 
-@dp.callback_query_handler(filters.ChatTypeFilter(types.ChatType.PRIVATE), regexp="natija:+")
+@dp.callback_query_handler(
+    filters.ChatTypeFilter(types.ChatType.PRIVATE), regexp="natija:+"
+)
 async def natija(call: types.CallbackQuery):
-    kod = call.data.split(':')[1]
-    javob_berganlar_user_ids = db_bj.select_all_javob_berganlar_by_test_kodi(
-        kod)
+    kod = call.data.split(":")[1]
+    javob_berganlar_user_ids = db_bj.select_all_javob_berganlar_by_test_kodi(kod)
     if javob_berganlar_user_ids != []:
         javob_berganlar_ismlari = []
         for user_id in javob_berganlar_user_ids:

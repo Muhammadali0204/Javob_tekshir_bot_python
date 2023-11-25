@@ -2,6 +2,7 @@ from . import yuqoridagi_tugma
 from . import statistika
 from . import start
 from . import bekor_qil
+
 # from . import photo
 from . import ortga_menu
 from . import ism_tahrirlash

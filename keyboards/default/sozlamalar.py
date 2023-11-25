@@ -4,11 +4,12 @@ sozlama_keyboard = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text="♻️Ismni tahrirlash"),
-            KeyboardButton(text="⬆️Limitlarni oshirish")
+            KeyboardButton(text="⬆️Limitlarni oshirish"),
         ],
         [
             KeyboardButton(text="🖇Bog'langan kanal/guruh"),
-            KeyboardButton(text="◀️Ortga")
-        ]
-    ], resize_keyboard=True
+            KeyboardButton(text="◀️Ortga"),
+        ],
+    ],
+    resize_keyboard=True,
 )

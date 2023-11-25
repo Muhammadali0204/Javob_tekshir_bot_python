@@ -1,5 +1,5 @@
 def isnuqta(x):
-    if x == '.':
+    if x == ".":
         return True
-    else :
+    else:
         return False

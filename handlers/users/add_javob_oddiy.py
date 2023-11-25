@@ -27,19 +27,28 @@ async def keldi_javoblar(msg: types.Message, state: FSMContext):
             await msg.answer(answer, reply_markup=tasdiq_keyboard)
             await state.set_state("berilgan_javobni_tasdiqlash")
         else:
-            await msg.answer(f"<b>Bu testning javoblari soni {haqiqiy_javob_uzunligi} ta.\nAmmo siz {berilgan_javob_size} ta javob yubordingiz❌</b>\n<i>Savollar soniga mos holda javoblarni qayta yuboring : </i>", reply_markup=bekor_qil)
+            await msg.answer(
+                f"<b>Bu testning javoblari soni {haqiqiy_javob_uzunligi} ta.\nAmmo siz {berilgan_javob_size} ta javob yubordingiz❌</b>\n<i>Savollar soniga mos holda javoblarni qayta yuboring : </i>",
+                reply_markup=bekor_qil,
+            )
     else:
-        await msg.answer("<b>Testning javobi faqat lotin harflaridan iborat!</b>\n<i>Qayta kiriting yoki bekor qiling.</i>", reply_markup=bekor_qil)
+        await msg.answer(
+            "<b>Testning javobi faqat lotin harflaridan iborat!</b>\n<i>Qayta kiriting yoki bekor qiling.</i>",
+            reply_markup=bekor_qil,
+        )
 
 
-@dp.callback_query_handler(text='yes', state="berilgan_javobni_tasdiqlash")
+@dp.callback_query_handler(text="yes", state="berilgan_javobni_tasdiqlash")
 async def tekshir(call: types.CallbackQuery, state: FSMContext):
     kod = temp_data[call.from_user.id][0]
     data_test = db_ts.select_test_oddiy_by_test_kodi(kod)
     if data_test == None:
         await call.answer("😕")
         await call.message.delete()
-        await call.message.answer("<b>Afsuski test yakunlandi❌</b>\n<i>Biroz kechikdingiz!</i>", reply_markup=menu)
+        await call.message.answer(
+            "<b>Afsuski test yakunlandi❌</b>\n<i>Biroz kechikdingiz!</i>",
+            reply_markup=menu,
+        )
         await state.finish()
     else:
         bergan_javobi = temp_data[call.from_user.id][2]
@@ -52,19 +61,16 @@ async def tekshir(call: types.CallbackQuery, state: FSMContext):
             if bergan_javobi[i] == aniq_javob[i]:
                 tuplagan_bal += 1
             else:
-                xato_javoblari_list.append(i+1)
-        xato_javoblari += ",".join([
-            f"{item}" for item in xato_javoblari_list
-        ])
+                xato_javoblari_list.append(i + 1)
+        xato_javoblari += ",".join([f"{item}" for item in xato_javoblari_list])
         try:
-            db_bj.add_javob_oddiy(call.from_user.id, kod,
-                                  tuplagan_bal, xato_javoblari)
+            db_bj.add_javob_oddiy(call.from_user.id, kod, tuplagan_bal, xato_javoblari)
         except Exception as e:
             print(e)
         answer = f"🔑<b>Test kodi : </b><i>{kod}</i>\n🗂<b>Test turi : </b><i>Oddiy</i>\n{kitoblar[random.randint(0, 4)]}<b>Fan nomi : </b><i>{data_test[2]}</i>\n✅<b>To`g`ri javoblar soni : </b><i>{tuplagan_bal} ta</i>\n❌<b>Xato javoblar soni : </b><i>{aniq_javob_size - tuplagan_bal} ta\n\n</i>"
-        vergul = data_test[4].find(',')
+        vergul = data_test[4].find(",")
         if vergul != -1:
-            vaqt = data_test[4].split(',')
+            vaqt = data_test[4].split(",")
             answer += f"🕐<i>Test {vaqt[2]}:{vaqt[3]} da yakunlanadi.</i>\n\n"
         await call.message.answer(answer, reply_markup=menu)
         await call.answer(f"{kod} - testga javob berdingiz ✅", show_alert=True)
@@ -80,8 +86,10 @@ async def tekshir(call: types.CallbackQuery, state: FSMContext):
         await bot.send_message(data_test[0], answer_admin, reply_markup=test_owner(kod))
 
 
-@dp.callback_query_handler(text='no', state="berilgan_javobni_tasdiqlash")
+@dp.callback_query_handler(text="no", state="berilgan_javobni_tasdiqlash")
 async def tekshir(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
-    await call.message.answer("<b>Javoblarni tog`rilab, qayta yuboring!\n</b>", reply_markup=bekor_qil)
+    await call.message.answer(
+        "<b>Javoblarni tog`rilab, qayta yuboring!\n</b>", reply_markup=bekor_qil
+    )
     await state.set_state("javoblar_junatiladi")

@@ -14,19 +14,19 @@ soatlar = InlineKeyboardMarkup(
             InlineKeyboardButton(text="0️⃣6️⃣", callback_data="06"),
             InlineKeyboardButton(text="0️⃣7️⃣", callback_data="07"),
         ],
-        [   
+        [
             InlineKeyboardButton(text="0️⃣8️⃣", callback_data="08"),
             InlineKeyboardButton(text="0️⃣9️⃣", callback_data="09"),
             InlineKeyboardButton(text="1️⃣0️⃣", callback_data="10"),
             InlineKeyboardButton(text="1️⃣1️⃣", callback_data="11"),
         ],
-        [   
+        [
             InlineKeyboardButton(text="1️⃣2️⃣", callback_data="12"),
             InlineKeyboardButton(text="1️⃣3️⃣", callback_data="13"),
             InlineKeyboardButton(text="1️⃣4️⃣", callback_data="14"),
             InlineKeyboardButton(text="1️⃣5️⃣", callback_data="15"),
         ],
-        [   
+        [
             InlineKeyboardButton(text="1️⃣6️⃣", callback_data="16"),
             InlineKeyboardButton(text="1️⃣7️⃣", callback_data="17"),
             InlineKeyboardButton(text="1️⃣8️⃣", callback_data="18"),
