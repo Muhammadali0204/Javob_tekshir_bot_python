@@ -7,7 +7,7 @@ Clonlab olish
 $ git clone https://github.com/Muhammadali0204/Javob_tekshir_bot_python
 ```
 
-Virtual muhit o'rnatish
+Virtual muhit o'rnatish (Agar yo'q bo'lsa)
 ```shell
 $ sudo apt install python3-venv
 ```
