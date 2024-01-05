@@ -9,10 +9,6 @@ $ git clone https://github.com/Muhammadali0204/Javob_tekshir_bot_python
 
 Virtual muhit o'rnatish
 ```shell
-$ python3 -m pip install virtualenv
-```
-Agar bu ishlamasa:
-```shell
 $ sudo apt install python3-venv
 ```
 
